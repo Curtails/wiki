@@ -4,6 +4,7 @@ layout: page
 date: 2019-05-05 01:01
 ---
 
+[TOC]
 
 BugkuCTF-WEB-WriteUp
 
