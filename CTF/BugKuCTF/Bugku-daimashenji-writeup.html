@@ -1,0 +1,429 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
+    <link rel="shortcut icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <title>BugkuCTF-代码审计-WriteUp - Curtails's personal knowledge wiki</title>
+    <meta name="keywords" content="Technology, CTF, Network Security"/>
+    <meta name="description" content="A wiki website of Curtails when I learned new knowledgy."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width" />
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+        </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','','ga');
+
+        ga('create', 'UA-78529611-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+
+<body>
+<div id="container">
+    
+<div id="header">
+  <div id="post-nav"><a href="/wiki/">Home</a>&nbsp;»&nbsp;<a href="/wiki/#CTF\BugKuCTF">CTF\BugKuCTF</a>&nbsp;»&nbsp;BugkuCTF-代码审计-WriteUp</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">BugkuCTF-代码审计-WriteUp</div>
+<div id="content">
+  <p>BugkuCTF-代码审计-WriteUp</p>
+<h2 id="extract">extract变量覆盖</h2>
+<div class="hlcode"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$flag</span><span class="o">=</span><span class="s1">&#39;xxx&#39;</span><span class="p">;</span>
+<span class="nb">extract</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$shiyan</span><span class="p">))</span>
+<span class="p">{</span>
+    <span class="nv">$content</span><span class="o">=</span><span class="nx">trim</span><span class="p">(</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="nv">$flag</span><span class="p">));</span>
+    <span class="k">if</span><span class="p">(</span><span class="nv">$shiyan</span><span class="o">==</span><span class="nv">$content</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">echo</span><span class="s1">&#39;flag{xxx}&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="k">else</span>
+<span class="p">{</span>
+    <span class="k">echo</span><span class="s1">&#39;Oh.no&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+
+<ul>
+<li><code>extract($_GET)</code>相当于</li>
+</ul>
+<div class="hlcode"><pre><span class="err">$</span><span class="n">shiyan</span> <span class="o">=</span> <span class="err">$</span><span class="n">_GET</span><span class="p">[</span><span class="err">&#39;</span><span class="n">shiyan</span><span class="err">&#39;</span><span class="p">]</span>
+<span class="err">$</span><span class="n">flag</span> <span class="o">=</span> <span class="err">$</span><span class="n">_GET</span><span class="p">[</span><span class="err">&#39;</span><span class="n">flag</span><span class="err">&#39;</span><span class="p">]</span><span class="err">。</span>
+</pre></div>
+
+
+<ul>
+<li>输出flag满足两个条件</li>
+<li><code>isset</code>为真 这个get<code>shiyan</code>参数即可 变量值为null亦可</li>
+<li><code>shiyan==flag</code></li>
+<li>payload<code>?shiyan=&amp;flag=</code></li>
+<li>flag{bugku-dmsj-p2sm3N}</li>
+</ul>
+<h2 id="strcmp">strcmp比较字符串</h2>
+<div class="hlcode"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$flag</span> <span class="o">=</span> <span class="s2">&quot;flag{xxxxx}&quot;</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]))</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">strcmp</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">],</span> <span class="nv">$flag</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="c1">//如果 str1 小于 str2 返回 &lt; 0； 如果 str1大于 str2返回 &gt; 0；如果两者相等，返回 0。</span>
+<span class="c1">//比较两个字符串（区分大小写）</span>
+<span class="k">die</span><span class="p">(</span><span class="s1">&#39;Flag: &#39;</span><span class="o">.</span><span class="nv">$flag</span><span class="p">);</span>
+<span class="k">else</span>
+<span class="k">print</span> <span class="s1">&#39;No&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+
+<ul>
+<li>strcmp无法判别数组，出错显示警告信息后后并return 0</li>
+<li>payload<code>?a[]=anything</code></li>
+<li>flag{bugku_dmsj_912k}</li>
+</ul>
+<h2 id="urldecode">urldecode二次编码绕过</h2>
+<div class="hlcode"><pre><span class="cp">&lt;?php</span>
+<span class="k">if</span><span class="p">(</span><span class="nb">eregi</span><span class="p">(</span><span class="s2">&quot;hackerDJ&quot;</span><span class="p">,</span><span class="nv">$_GET</span><span class="p">[</span><span class="nx">id</span><span class="p">]))</span> <span class="p">{</span>
+    <span class="k">echo</span><span class="p">(</span><span class="s2">&quot;</span>
+
+<span class="s2">    not allowed!</span>
+<span class="s2">    &quot;</span><span class="p">);</span>
+    <span class="k">exit</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="nv">$_GET</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="nb">urldecode</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="nx">id</span><span class="p">]);</span>
+<span class="k">if</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;hackerDJ&quot;</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">&quot;</span>
+
+<span class="s2">    Access granted!</span>
+<span class="s2">    &quot;</span><span class="p">;</span>
+    <span class="k">echo</span> <span class="s2">&quot;</span>
+
+<span class="s2">    flag</span>
+<span class="s2">    &quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+
+<ul>
+<li>浏览器默认对参数进行一次url编码</li>
+<li>eregi会搜索指定字符串 url解码一次 所以无法直接<code>id=hackerDJ</code></li>
+<li>urldecode()会将$_GET[id]从二次URL编码变成一次URL编码，赋值给$_GET[id]，当$_GET[id]与“hackerDJ”比较时，$_GET[id]再从一次URL编码解码，最后比较相等得到flag</li>
+<li>将<code>hackerDJ</code>进行两次url编码<code>%25%36%38%25%36%31%25%36%33%25%36%62%25%36%35%25%37%32%25%34%34%25%34%61</code></li>
+<li>payload<code>?id=%25%36%38%25%36%31%25%36%33%25%36%62%25%36%35%25%37%32%25%34%34%25%34%61</code></li>
+<li>flag{bugku__daimasj-1t2} </li>
+</ul>
+<h2 id="md5">md5()函数</h2>
+<div class="hlcode"><pre><span class="cp">&lt;?php</span>
+<span class="nb">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="nv">$flag</span> <span class="o">=</span> <span class="s1">&#39;flag{test}&#39;</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">])</span> <span class="k">and</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]))</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])</span>
+        <span class="k">print</span> <span class="s1">&#39;Your password can not be your username.&#39;</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nb">md5</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">])</span> <span class="o">===</span> <span class="nb">md5</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]))</span>
+        <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Flag: &#39;</span><span class="o">.</span><span class="nv">$flag</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="k">print</span> <span class="s1">&#39;Invalid password&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+
+<ul>
+<li>读源码得知 username不等于password且md5二者值相等输出flag</li>
+<li>md5不支持处理数组返回null 所以<code>?username[]=1&amp;password[]=2</code></li>
+<li>传入以0e开头的字符串行吗？不行 因为是强类型<code>===</code></li>
+<li>flag{bugk1u-ad8-3dsa-2}</li>
+</ul>
+<h2 id="null">数组返回NULL绕过</h2>
+<div class="hlcode"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$flag</span> <span class="o">=</span> <span class="s2">&quot;flag&quot;</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">isset</span> <span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])){</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">ereg</span> <span class="p">(</span><span class="s2">&quot;^[a-zA-Z0-9]+$&quot;</span><span class="p">,</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])</span> <span class="o">===</span> <span class="k">FALSE</span><span class="p">)</span>
+    <span class="k">echo</span> <span class="s1">&#39;You password must be alphanumeric&#39;</span><span class="p">;</span>
+<span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nb">strpos</span> <span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">FALSE</span><span class="p">)</span>
+    <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Flag: &#39;</span> <span class="o">.</span> <span class="nv">$flag</span><span class="p">);</span>
+<span class="k">else</span>
+    <span class="k">echo</span> <span class="s1">&#39;Invalid password&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+
+<ul>
+<li>strpos()函数不能处理数组的漏洞构造</li>
+<li>payload<code>?password[]=</code></li>
+<li>flag{ctf-bugku-ad-2131212}</li>
+</ul>
+<h2 id="_1">弱类型整数大小比较绕过</h2>
+<div class="hlcode"><pre><span class="x">$temp = $_GET[&#39;password&#39;];</span>
+<span class="x">is_numeric($temp)?die(&quot;no numeric&quot;):NULL;</span>
+<span class="x">if($temp&gt;1336){</span>
+<span class="x">echo $flag;</span>
+</pre></div>
+
+
+<ul>
+<li>is_numeric — 检测变量是否为数字或数字字符串;bool is_numeric( mixed $var);如果 var 是数字和数字字符串则返回 TRUE，否则返回 FALSE。</li>
+<li>payload<code>?pwssword=1337a</code></li>
+<li>flag{bugku_null_numeric}</li>
+</ul>
+<h2 id="sha">sha()函数比较绕过</h2>
+<div class="hlcode"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$flag</span> <span class="o">=</span> <span class="s2">&quot;flag&quot;</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span> <span class="k">and</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]))</span>
+<span class="p">{</span>
+    <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span>
+    <span class="k">echo</span> <span class="s2">&quot;</span>
+<span class="s2">    &quot;</span><span class="p">;</span>
+    <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]);</span>
+    <span class="nb">var_dump</span><span class="p">(</span><span class="nb">sha1</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]));</span>
+    <span class="nb">var_dump</span><span class="p">(</span><span class="nb">sha1</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]));</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])</span>
+        <span class="k">echo</span> <span class="s1">&#39;</span>
+<span class="s1">        Your password can not be your name!</span>
+<span class="s1">        &#39;</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nb">sha1</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span> <span class="o">===</span> <span class="nb">sha1</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]))</span>
+    <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Flag: &#39;</span><span class="o">.</span><span class="nv">$flag</span><span class="p">);</span>
+    <span class="k">else</span>
+    <span class="k">echo</span> <span class="s1">&#39;</span>
+
+<span class="s1">    Invalid password.</span>
+<span class="s1">    &#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="k">else</span>
+    <span class="k">echo</span> <span class="s1">&#39;</span>
+<span class="s1">    Login first!</span>
+<span class="s1">    &#39;</span><span class="p">;</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+
+<ul>
+<li>利用sha1函数不能处理数组进行构造payload</li>
+<li>payload<code>?name[]=a&amp;password[]=b</code></li>
+<li>flag{bugku--daimasj-a2}</li>
+</ul>
+<h2 id="md5_1">md5加密相等绕过</h2>
+<div class="hlcode"><pre><span class="cp">&lt;?php</span>
+<span class="nv">$md51</span> <span class="o">=</span> <span class="nb">md5</span><span class="p">(</span><span class="s1">&#39;QNKCDZO&#39;</span><span class="p">);</span>
+<span class="nv">$a</span> <span class="o">=</span> <span class="o">@</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">];</span>
+<span class="nv">$md52</span> <span class="o">=</span> <span class="o">@</span><span class="nb">md5</span><span class="p">(</span><span class="nv">$a</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$a</span><span class="p">)){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$a</span> <span class="o">!=</span> <span class="s1">&#39;QNKCDZO&#39;</span> <span class="o">&amp;&amp;</span> <span class="nv">$md51</span> <span class="o">==</span> <span class="nv">$md52</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">&quot;flag{*}&quot;</span><span class="p">;</span>
+    <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+        <span class="k">echo</span> <span class="s2">&quot;false!!!&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">else</span><span class="p">{</span><span class="k">echo</span> <span class="s2">&quot;please input a&quot;</span><span class="p">;}</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+
+<ul>
+<li>利用MD5函数处理的特殊字符串进行绕过构造payload</li>
+</ul>
+<div class="hlcode"><pre><span class="x">//下面的特殊字符串经过MD5函数处理过之后相等</span>
+<span class="x">QNKCDZO</span>
+<span class="x">0e830400451993494058024219903391</span>
+
+<span class="x">s878926199a</span>
+<span class="x">0e545993274517709034328855841020</span>
+
+<span class="x">s155964671a</span>
+<span class="x">0e342768416822451524974117254469</span>
+
+<span class="x">s214587387a</span>
+<span class="x">0e848240448830537924465865611904</span>
+
+<span class="x">s214587387a</span>
+<span class="x">0e848240448830537924465865611904</span>
+
+<span class="x">s878926199a</span>
+<span class="x">0e545993274517709034328855841020</span>
+
+<span class="x">s1091221200a</span>
+<span class="x">0e940624217856561557816327384675</span>
+
+<span class="x">s1885207154a</span>
+<span class="x">0e509367213418206700842008763514</span>
+</pre></div>
+
+
+<ul>
+<li>flag{bugku-dmsj-am9ls} </li>
+</ul>
+<h2 id="_2">十六进制与数字比较</h2>
+<p>阅读源码</p>
+<div class="hlcode"><pre><span class="cp">&lt;?php</span>
+<span class="nb">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="k">function</span> <span class="nf">noother_says_correct</span><span class="p">(</span><span class="nv">$temp</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$flag</span> <span class="o">=</span> <span class="s1">&#39;flag{test}&#39;</span><span class="p">;</span>
+    <span class="nv">$one</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">);</span> <span class="c1">//ord — 返回字符的 ASCII 码值</span>
+    <span class="nv">$nine</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;9&#39;</span><span class="p">);</span> <span class="c1">//ord — 返回字符的 ASCII 码值</span>
+    <span class="nv">$number</span> <span class="o">=</span> <span class="s1">&#39;3735929054&#39;</span><span class="p">;</span>
+    <span class="c1">// Check all the input characters!</span>
+    <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nb">strlen</span><span class="p">(</span><span class="nv">$number</span><span class="p">);</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Disallow all the digits!</span>
+        <span class="nv">$digit</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="nv">$temp</span><span class="p">{</span><span class="nv">$i</span><span class="p">});</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="nv">$digit</span> <span class="o">&gt;=</span> <span class="nv">$one</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nv">$digit</span> <span class="o">&lt;=</span> <span class="nv">$nine</span><span class="p">)</span> <span class="p">)</span>
+        <span class="p">{</span>
+        <span class="c1">// Aha, digit not allowed!</span>
+        <span class="k">return</span> <span class="s2">&quot;flase&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="nv">$number</span> <span class="o">==</span> <span class="nv">$temp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nv">$flag</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nv">$temp</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">];</span>
+<span class="k">echo</span> <span class="nx">noother_says_correct</span><span class="p">(</span><span class="nv">$temp</span><span class="p">);</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+
+<ul>
+<li>满足两个条件 password不能含有数字1-9 number==temp</li>
+<li>恰巧题目给我提供了<code>3735929054</code>它的hex不含1-9<code>0xdeadc0de</code> 满足上述条件</li>
+<li>payload<code>?password=0xdeadc0de</code></li>
+<li>flag{Bugku-admin-ctfdaimash}</li>
+</ul>
+<h2 id="_3">变量覆盖</h2>
+<p>挂了</p>
+<h2 id="ereg00">ereg正则%00截断</h2>
+<div class="hlcode"><pre><span class="cp">&lt;?php</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">isset</span> <span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]))</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">ereg</span> <span class="p">(</span><span class="s2">&quot;^[a-zA-Z0-9]+$&quot;</span><span class="p">,</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])</span> <span class="o">===</span> <span class="k">FALSE</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">echo</span> <span class="s1">&#39;&lt;p&gt;You password must be alphanumeric&lt;/p&gt;&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nb">strlen</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">8</span> <span class="o">&amp;&amp;</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">9999999</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">strpos</span> <span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">],</span> <span class="s1">&#39;*-*&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">FALSE</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Flag: &#39;</span> <span class="o">.</span> <span class="nv">$flag</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+            <span class="k">echo</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;*-* have not been found&lt;/p&gt;&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="k">echo</span> <span class="s1">&#39;&lt;p&gt;Invalid password&lt;/p&gt;&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+</pre></div>
+
+
+<ul>
+<li>利用strlen()函数和strpos()函数不能处理数组进行构造payload</li>
+<li>payload<code>?password[]=</code></li>
+<li>flag{bugku-dm-sj-a12JH8}</li>
+</ul>
+<h2 id="strpos">strpos数组绕过</h2>
+<div class="hlcode"><pre><span class="cp">&lt;?</span>
+<span class="nx">php</span><span class="nv">$flag</span> <span class="o">=</span> <span class="s2">&quot;flag&quot;</span><span class="p">;</span> 
+<span class="k">if</span> <span class="p">(</span><span class="nb">isset</span> <span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;ctf&#39;</span><span class="p">]))</span> 
+<span class="p">{</span> 
+    <span class="k">if</span> <span class="p">(</span><span class="o">@</span><span class="nb">ereg</span> <span class="p">(</span><span class="s2">&quot;^[1-9]+$&quot;</span><span class="p">,</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;ctf&#39;</span><span class="p">])</span> <span class="o">===</span> <span class="k">FALSE</span><span class="p">)</span> 
+        <span class="k">echo</span> <span class="s1">&#39;必须输入数字才行&#39;</span><span class="p">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nb">strpos</span> <span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;ctf&#39;</span><span class="p">],</span> <span class="s1">&#39;#biubiubiu&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">FALSE</span><span class="p">)</span> 
+            <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Flag: &#39;</span><span class="o">.</span><span class="nv">$flag</span><span class="p">);</span> 
+        <span class="k">else</span> <span class="k">echo</span> <span class="s1">&#39;骚年，继续努力吧啊~&#39;</span><span class="p">;</span> 
+        <span class="p">}</span> 
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+
+<ul>
+<li>利用strpos()函数不能处理数组进行构造payload</li>
+<li>payload<code>?ctf[]=</code></li>
+<li>flag{Bugku-D-M-S-J572}</li>
+</ul>
+<h2 id="_4">数字验证正则绕过</h2>
+<div class="hlcode"><pre><span class="cp">&lt;?php</span>
+<span class="nb">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="nv">$flag</span> <span class="o">=</span> <span class="s1">&#39;flag{test}&#39;</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="s2">&quot;POST&quot;</span> <span class="o">==</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">])</span>
+<span class="p">{</span>
+<span class="nv">$password</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">];</span>
+<span class="k">if</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&gt;=</span> <span class="nb">preg_match</span><span class="p">(</span><span class="s1">&#39;/^[[:graph:]]{12,}$/&#39;</span><span class="p">,</span> <span class="nv">$password</span><span class="p">))</span> <span class="c1">//preg_match — 执行一个正则表达式匹配</span>
+<span class="p">{</span>
+<span class="k">echo</span> <span class="s1">&#39;flag&#39;</span><span class="p">;</span>
+<span class="k">exit</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">while</span> <span class="p">(</span><span class="k">TRUE</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="nv">$reg</span> <span class="o">=</span> <span class="s1">&#39;/([[:punct:]]+|[[:digit:]]+|[[:upper:]]+|[[:lower:]]+)/&#39;</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="mi">6</span> <span class="o">&gt;</span> <span class="nb">preg_match_all</span><span class="p">(</span><span class="nv">$reg</span><span class="p">,</span> <span class="nv">$password</span><span class="p">,</span> <span class="nv">$arr</span><span class="p">))</span>
+<span class="k">break</span><span class="p">;</span>
+<span class="nv">$c</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nv">$ps</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;punct&#39;</span><span class="p">,</span> <span class="s1">&#39;digit&#39;</span><span class="p">,</span> <span class="s1">&#39;upper&#39;</span><span class="p">,</span> <span class="s1">&#39;lower&#39;</span><span class="p">);</span> <span class="c1">//[[:punct:]] 任何标点符号 [[:digit:]] 任何数字 [[:upper:]] 任何大写字母 [[:lower:]] 任何小写字母</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$ps</span> <span class="k">as</span> <span class="nv">$pt</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">preg_match</span><span class="p">(</span><span class="s2">&quot;/[[:</span><span class="si">$pt</span><span class="s2">:]]+/&quot;</span><span class="p">,</span> <span class="nv">$password</span><span class="p">))</span>
+<span class="nv">$c</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">if</span> <span class="p">(</span><span class="nv">$c</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+<span class="c1">//&gt;=3，必须包含四种类型三种与三种以上</span>
+<span class="k">if</span> <span class="p">(</span><span class="s2">&quot;42&quot;</span> <span class="o">==</span> <span class="nv">$password</span><span class="p">)</span> <span class="k">echo</span> <span class="nv">$flag</span><span class="p">;</span>
+<span class="k">else</span> <span class="k">echo</span> <span class="s1">&#39;Wrong password&#39;</span><span class="p">;</span>
+<span class="k">exit</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="p">}</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+
+<ul>
+<li>做傻了 都可以用数组绕过</li>
+<li>preg_match()函数不能处理数组进行构造payload</li>
+<li>get不行 post:<code>password[]=</code></li>
+<li>flag{Bugku_preg_match}</li>
+</ul>
+<h2 id="waf">简单的waf</h2>
+<p>挂了</p>
+</div>
+<div id="content-footer">created in <span class="create-date date"> 2019-08-23 01:01 </span></div>
+
+</div>
+<div id="footer">
+            <span>
+                Copyright © 2019 Curtails.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Fork me in <a href="" target="_blank"> github </a>.
+            </span>
+</div>
+
+
+<!--百度统计-->
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+</body>
+</html>
