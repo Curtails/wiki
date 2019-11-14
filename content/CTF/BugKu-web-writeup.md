@@ -1,56 +1,42 @@
 ---
+title: "BugkuCTF-WEB-WriteUp"
 layout: page
-title: BugkuCTF-WEB-WriteUp
-date: 2019-05-05 01:01:01
+date: 2019-05-05 01:01
 ---
 
 
 BugkuCTF-WEB-WriteUp
 
 ## Web2
-![](http://imglf4.nosdn0.126.net/img/SmlBNVNYWEwrN0c3a0JLS2VlS1l3ZnZsTS9jTEdtMFJHNkZBbTBZaXFjWG50ang0WUIzZi9RPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)
 
 - 解题
 - 打开网站如下（一片滑稽）
-
-  ![](http://imglf5.nosdn0.126.net/img/SmlBNVNYWEwrN0c3a0JLS2VlS1l3VjhGVDdVYnhlTy9jNDhLcXVENjB3bWlTTXBiNW1ZU3FRPT0.png?imageView&thumbnail=1920y1030&type=png&quality=96&stripmeta=0)
-
 - 查看源代码
-
-  ![](http://imglf6.nosdn0.126.net/img/SmlBNVNYWEwrN0c3a0JLS2VlS1l3VUljRWp6Ym4za0dpR29MYXlVbFgyZWt3U2ZlV2h6MldRPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)
 
 - 得到flag
 - Flag
 KEY{Web-2-bugKssNNikls9100}
 
 
-
 ## 计算器
-
-![](http://imglf5.nosdn0.126.net/img/SmlBNVNYWEwrN0c3a0JLS2VlS1l3WFkwODhVTTd6VTdkdjRFeVRuZlZ1MTdTQVQ0QmYwQjBRPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)
 
 - 解题
 
 - 打开网址输入结果，发现只能输入一位数字
 
-  ![](http://imglf3.nosdn0.126.net/img/SmlBNVNYWEwrN0c3a0JLS2VlS1l3WDhFMGU3OGdWNktDMUV6L256N1RCYUJLWHExTWhYNE1RPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)
-
 - 查看元素找到maxlength
 
-  ![](http://imglf3.nosdn0.126.net/img/SmlBNVNYWEwrN0c3a0JLS2VlS1l3YnZHVjRCUWxHYW9DVHZ5L2taNWpiZDhvSWNFblJ4N2ZRPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)
 
 - 修改maxlength = 3
 
 - 输入正确答案
 
-  ![](http://imglf6.nosdn0.126.net/img/SmlBNVNYWEwrN0c3a0JLS2VlS1l3U01MM0NGQU4xczMxdWtoU1FGM04vblhnN0c3T0lvZlVBPT0.png?imageView&thumbnail=1920y392&type=png&quality=96&stripmeta=0)
 
 - Flag
 flag{CTF-bugku-0032}
 
 
 ## web基础$_GET 
-![](http://imglf3.nosdn0.126.net/img/SmlBNVNYWEwrN0Y5STBMcTkwdUYrUnFWUm8wZkROVnNiUURDQ2xLQ3Jrc2QxSDlRN0luOWRBPT0.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0)
 
 - 解题
 - 打开网址
