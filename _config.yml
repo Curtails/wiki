@@ -2,9 +2,9 @@
 # http://simiki.org/docs/configuration.html
 
 url: https://Curtails.github.io/wiki/
-title: zhanghongwei's personal knowledge wiki
-keywords: technology, machine learning, data mining
-description: A wiki website of zhanghongwei when I learned new knowledgy and technics.
+title: Curtails's personal knowledge wiki
+keywords: Technology, CTF, Network Security
+description: A wiki website of Curtails when I learned new knowledgy.
 author: Curtails
 
 root: /wiki/
