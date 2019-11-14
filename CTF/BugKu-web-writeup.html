@@ -1,30 +1,45 @@
 <!DOCTYPE HTML>
 <html>
-  <head>
+<head>
     <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
     <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
     <link rel="shortcut icon" href="/wiki/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/wiki/favicon.ico" type="image/x-icon">
-    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
     <title>BugkuCTF-WEB-WriteUp - Curtails's personal knowledge wiki</title>
     <meta name="keywords" content="Technology, CTF, Network Security"/>
     <meta name="description" content="A wiki website of Curtails when I learned new knowledgy."/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
+    <meta name="viewport" content="width=device-width" />
 
-  <body>
-    <div id="container">
-      
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+        </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-78529611-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+
+<body>
+<div id="container">
+    
 <div id="header">
-  <div class="post-nav"><a href="/wiki/">Home</a>&nbsp;&#187;&nbsp;<a href="/wiki/#CTF">CTF</a>&nbsp;&#187;&nbsp;BugkuCTF-WEB-WriteUp
-    <span class="updated">Page Updated&nbsp;
-      2019-05-05 01:01
-    </span></div>
+  <div id="post-nav"><a href="/wiki/">Home</a>&nbsp;»&nbsp;<a href="/wiki/#CTF">CTF</a>&nbsp;»&nbsp;BugkuCTF-WEB-WriteUp</div>
 </div>
 <div class="clearfix"></div>
-
-<div class="page_title">BugkuCTF-WEB-WriteUp</div>
-
+<div id="title">BugkuCTF-WEB-WriteUp</div>
+<div id="content">
   <div class="toc"><span class="toctitle">Table of Contents</span><ul>
 <li><a href="#web2">Web2</a></li>
 <li><a href="#_1">计算器</a></li>
@@ -623,16 +638,52 @@ hint：md5 collision MD5碰撞<br />
 - 显示<code>about hello.php index.php this_is_th3_F14g_154f65sd4g35f4d6f43.txt upload upload.php</code><br />
 - 看到txt文件访问<code>http://123.206.31.85:49166/index.php?file=this_is_th3_F14g_154f65sd4g35f4d6f43.txt</code>得出key<br />
 - SKCTF{uP104D_1nclud3_426fh8_is_Fun}</p>
-    </div>
-    <div id="footer">
-      <span>
-        <p>Copyright © 2019 Curtails.
-        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
-        <p>Site Generated 2019-11-14 20:03:08</p>
-      </span>
-    </div>
+</div>
+<div id="content-footer">created in <span class="create-date date"> 2019-05-05 01:01 </span></div>
+<div id="comments"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script type="text/javascript">
+const gitment = new Gitment({
+  id: '<%= page.date %>',
+  title: 'BugkuCTF-WEB-WriteUp',
+  owner: '2kkkkk',
+  repo: 'wiki',
+  oauth: {
+    client_id: '3e94faa97d38ef7da223',
+    client_secret: '20685c8a4da0dfad1c1ae91970b7805e260c5abb',
+  },
+  // ...
+  // For more available options, check out the documentation below
+})
+gitment.render('comments')
+// or
+// gitment.render(document.getElementById('comments'))
+// or
+// document.body.appendChild(gitment.render())
+</script>
 
-    
-    
-  </body>
+</div>
+<div id="footer">
+            <span>
+                Copyright © 2019 Curtails.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Fork me in <a href="https://github.com/2kkkkk/wiki" target="_blank"> github </a>.
+            </span>
+</div>
+
+
+<!--百度统计-->
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?90e1dcdd1938573c19f9ff6521188e91";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+</body>
 </html>
