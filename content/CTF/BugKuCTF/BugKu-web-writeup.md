@@ -152,7 +152,8 @@ highlight_file(__FILE__);
 
 ## 变量1
 提示我们flag In the variable ! 看到$$args 想到全局变量GLOBALS
-- ```php
+
+```php
   <?php  
   error_reporting(0);
   include "flag1.php";
@@ -165,7 +166,7 @@ highlight_file(__FILE__);
       eval("var_dump($$args);");
   }
   ?>
-  ```
+```
   阅读得知`preg_match("/^\w+$/",$args)`输入args得满足此正则表达式
 - 构造payload输出GLOBALS内容`?args=GLOBALS`
 - flag{92853051ab894a64f7865cf3c2128b34}
@@ -203,7 +204,8 @@ hint：本地管理员
 hint：看看源代码
 - 查看源码两个变量p1 p2是由% 数字组成的字符串 还有额外类似字符串代码提示unescape 为escape编码
 - 解码按照代码提示合并得
-  ```php
+
+```php
   function checksubmit(){
     var a=document.getelementbyid("password");
     if("undefined"!=typeof a){
@@ -215,7 +217,7 @@ hint：看看源代码
         }
       }
       document.getelementbyid("levelquest").onsubmit=checksubmit;
-  ```
+```
 - 代码意思大致是password=67d709b2b54aa2aa648cf6e87a7114f1
 - 输入字符串
 - KEY{J22JK-HS11}
@@ -390,6 +392,7 @@ url=http://123.206.87.240:8006/test/hello.php
 - 源码提1p.html 访问 123.206.87.240:8006/test/1p.html结果跳转bugku论坛
 - 看一下这1p.html源码 view-source:http://123.206.87.240:8006/test/1p.html
 - Words变量的值先url解码，再base64解码，再url解码
+
 ```php
   ";if(!$_GET['id'])
 {
@@ -415,6 +418,7 @@ else
 }
 ?>
 ```
+
 - 看到f4l2a3g.txt 这个竟然能直接访问 http://123.206.87.240:8006/test/f4l2a3g.txt
 - flag{tHis_iS_THe_fLaG}
 
