@@ -1,0 +1,214 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
+    <link rel="shortcut icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <title>BUUCTF-MISC-WriteUp - Curtails's personal knowledge wiki</title>
+    <meta name="keywords" content="Technology, CTF, Network Security"/>
+    <meta name="description" content="A wiki website of Curtails when I learned new knowledgy."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width" />
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+        </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','','ga');
+
+        ga('create', 'UA-78529611-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+
+<body>
+<div id="container">
+    
+<div id="header">
+  <div id="post-nav"><a href="/wiki/">Home</a>&nbsp;»&nbsp;<a href="/wiki/#CTF\BUUCTF">CTF\BUUCTF</a>&nbsp;»&nbsp;BUUCTF-MISC-WriteUp</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">BUUCTF-MISC-WriteUp</div>
+<div id="content">
+  <p>BUUCTF-MISC-WriteUp</p>
+<h2 id="_1">签到</h2>
+<h2 id="_2">二维码</h2>
+<h2 id="_3">金三胖</h2>
+<h2 id="n">N种方法解决</h2>
+<h2 id="_4">大白</h2>
+<p>...重复题太多</p>
+<h2 id="_5">后门查杀</h2>
+<ul>
+<li>用d盾扫一下得木马</li>
+<li>查找password</li>
+<li>加上flag{}</li>
+</ul>
+<h2 id="_6">另外一个世界</h2>
+<ul>
+<li>丢进winhex得一堆二进制</li>
+<li>直接Converter.exe转字符串</li>
+<li>加上flag{}</li>
+</ul>
+<h2 id="snake">snake</h2>
+<ul>
+<li>丢进winhex末尾发现<code>V2hhdCBpcyBOaWNraSBNaW5haidzIGZhdm9yaXRlIHNvbmcgdGhhdCByZWZlcnMgdG8gc25ha2VzPwo=</code></li>
+<li>解码得<code>What is Nicki Minaj's favorite song that refers to snakes?</code> wtf？？</li>
+<li>搜索这个歌手是这首歌<code>Anaconda</code>意思为大蟒蛇</li>
+<li>丢进binwalk分离pk解压得cipher和key key得内容就是上述的base64编码 cipher意思为暗号</li>
+<li>http://serpent.online-domain-tools.com/ 可以在线解密 猜测加密方式为Serpent key为<code>anaconda</code></li>
+<li>得flag</li>
+</ul>
+<h2 id="_7">九连环</h2>
+<p>拿到图片<br />
+- 丢进binwalk 有zip foremost出来<br />
+- 这个压缩包是伪加密 用winhex改或者直接binwalk -e(学到了)<br />
+- 得图片和一压缩包有密码（真压缩） <br />
+- 这个图片binwalk没东西其实是有东西的 用工具<code>steghide</code></p>
+<div class="hlcode"><pre><span class="n">steghide</span> <span class="n">info</span> <span class="n">good</span><span class="p">.</span><span class="n">jpg</span>
+<span class="n">steghide</span> <span class="n">extract</span> <span class="o">-</span><span class="n">sf</span> <span class="n">good</span><span class="p">.</span><span class="n">jpg</span>
+</pre></div>
+
+
+<ul>
+<li>没密码直接回车即可 得ko.txt这是压缩文件密码</li>
+<li>解压得flag</li>
+</ul>
+<h2 id="flag">面具下的flag</h2>
+<ul>
+<li>丢进binwalk有东西foremost</li>
+<li>得flag.vmdk 这玩意是vm的文件但是可以用7z解压（学到了）</li>
+<li>在kali解压<code>7z x filename.7z</code>在win下用7z解压不完整（不知原因）</li>
+<li>得一堆文件其中<code>where_is_flag_part_two.txt:flag_part_two_is_here.txt</code>以及<code>_NUL</code>文件中含有Ook及brainfuck</li>
+<li>解码拼起来得flag</li>
+<li>flag{N7F5_AD5_i5_funny!}</li>
+</ul>
+<h2 id="mysterious">Mysterious</h2>
+<p>这是一道逆向题<br />
+- 丢进od能查找出flag但是不对 因为缺少了一项<br />
+- 丢进ida看看定位到flag相关函数</p>
+<div class="hlcode"><pre><span class="k">if</span> <span class="p">(</span> <span class="n">v10</span> <span class="o">==</span> <span class="mi">123</span> <span class="o">&amp;&amp;</span> <span class="n">v12</span> <span class="o">==</span> <span class="mi">120</span> <span class="o">&amp;&amp;</span> <span class="n">v14</span> <span class="o">==</span> <span class="mi">122</span> <span class="o">&amp;&amp;</span> <span class="n">v13</span> <span class="o">==</span> <span class="mi">121</span> <span class="p">)</span>
+      <span class="p">{</span>
+        <span class="n">strcpy</span><span class="p">(</span><span class="n">Text</span><span class="p">,</span> <span class="s">&quot;flag&quot;</span><span class="p">);</span>
+        <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">v7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0xFCu</span><span class="p">);</span>
+        <span class="n">v8</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">v9</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">_itoa</span><span class="p">(</span><span class="n">v10</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">v5</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+        <span class="n">strcat</span><span class="p">(</span><span class="n">Text</span><span class="p">,</span> <span class="s">&quot;{&quot;</span><span class="p">);</span>
+        <span class="n">strcat</span><span class="p">(</span><span class="n">Text</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">v5</span><span class="p">);</span>
+        <span class="n">strcat</span><span class="p">(</span><span class="n">Text</span><span class="p">,</span> <span class="s">&quot;_&quot;</span><span class="p">);</span>
+        <span class="n">strcat</span><span class="p">(</span><span class="n">Text</span><span class="p">,</span> <span class="s">&quot;Buff3r_0v3rf|0w&quot;</span><span class="p">);</span>
+        <span class="n">strcat</span><span class="p">(</span><span class="n">Text</span><span class="p">,</span> <span class="s">&quot;}&quot;</span><span class="p">);</span>
+        <span class="n">MessageBoxA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="s">&quot;well done&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+      <span class="p">}</span>
+</pre></div>
+
+
+<ul>
+<li>先输出{ 其次v5 然后_ 最后Buff3r_0v3rf|0w}</li>
+<li>itoa(v10, &amp;v5, 10)是将v10字符串以十进制保存在v5中 v5=123</li>
+<li>flag{123_Buff3r_0v3rf|0w}</li>
+</ul>
+<h2 id="_8">数据包中的线索</h2>
+<ul>
+<li>打开查看tcp头毫无所获</li>
+<li>/9j/为jpg头标识 加上<code>data:image/jpeg;base64</code></li>
+<li>查找http头发现一大堆字符串</li>
+<li><code>/9j/</code>经base64解码后结果为“\xff \xd8 \xff”，该三字节为jpg文件的开头三字节</li>
+</ul>
+<div class="hlcode"><pre><span class="n">data</span><span class="o">:</span><span class="n">image</span><span class="sr">/jpeg;base64,/9j/</span><span class="mi">4</span><span class="n">AAQSkZJRgABAQEAYABgAAD</span><span class="o">.......</span>
+</pre></div>
+
+
+<ul>
+<li>base64转图片得到含有flag得路飞得图片</li>
+<li>flag{209acebf6324a09671abc31c869de72c}</li>
+</ul>
+<h2 id="_9">被劫持的神秘礼物</h2>
+<p>下载得文件gift.pcapnggift.pcapng<br />
+- 打开进行分析 题目说是账号密码 一般跟登录有关</p>
+<div class="hlcode"><pre><span class="mi">4</span>   <span class="mf">0.003591</span>    <span class="mf">192.168.78.134</span>  <span class="mf">192.168.60.123</span>  <span class="n">HTTP</span>    <span class="mi">704</span> <span class="n">POST</span> <span class="o">/</span><span class="n">index</span><span class="p">.</span><span class="n">php</span><span class="o">?</span><span class="n">r</span><span class="o">=</span><span class="n">member</span><span class="o">/</span><span class="n">index</span><span class="o">/</span><span class="n">login</span> <span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span>  <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">x</span><span class="o">-</span><span class="n">www</span><span class="o">-</span><span class="n">form</span><span class="o">-</span><span class="n">urlencoded</span><span class="p">)</span>
+</pre></div>
+
+
+<ul>
+<li>post传参 以及网址是index/login 查看流</li>
+<li>找到name及word<code>adminaadminb</code></li>
+</ul>
+<div class="hlcode"><pre><span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="n">date</span><span class="o">=</span><span class="s">&#39;adminaadminb&#39;</span>
+<span class="n">m</span><span class="o">=</span><span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">())</span>
+</pre></div>
+
+
+<ul>
+<li>flag{1d240aafe21a86afc11f38a45b541a49}</li>
+</ul>
+<h2 id="666">菜刀666</h2>
+<h2 id="_10">刷新过的图片</h2>
+<p>F5隐写 下载F5-steganography 进入目录<br />
+- <code>java Extract Misc.jpg（图片的绝对路径） -e res.zip</code><br />
+- 压缩包伪加密<br />
+- 解压打开txt得flag<br />
+- flag{96efd0a2037d06f34199e921079778ee}</p>
+<h2 id="_11">二维码</h2>
+<p>被撕成九份的二维码？？有啥意思考验我ps水平？<br />
+- 上ps套索然后拼在一起<br />
+- 尽力了 <a href="https://i.loli.net/2019/09/10/2Vxho6rPFtzBQZw.png">图片</a><br />
+- 有那么一瞬间可以扫<br />
+- flag{7bf116c8ec2545708781fd4a0dda44e5}</p>
+<h2 id="_12">弱口令</h2>
+<p>得一压缩包有密码 提示弱口令<br />
+- 我还真以为弱口令 换了俩个字典无果<br />
+- 压缩包里注释有东西 是一大堆不可见字符</p>
+<div class="hlcode"><pre>
+</pre></div>
+
+
+<ul>
+<li>这些字符串放到sublime里能看见是由点和横组成的 像摩斯电码</li>
+<li>可惜我手上没有sublime 只有vscode和notepad++ 放到notepad++里右键style token在一步步按键盘右键 也能比较方便写出莫斯电码</li>
+<li><code>.... . .-.. .-.. ----- ..-. --- .-. ..- --</code> to<code>HELL0FORUM</code></li>
+<li>解压得png</li>
+<li>winhex无果由于png考虑lsb隐写无果 可能是加密的lsb</li>
+<li>使用<code>cloacked-pixel</code>在kali下 因为是弱口令猜测123456<code>python lsb.py extract nvshen.png res.txt 123456</code> </li>
+<li>得res.txt打开为flag</li>
+<li>flag{jsy09-wytg5-wius8}</li>
+</ul>
+</div>
+<div id="content-footer">Created in <span class="create-date date"> 2019-09-09 01:01 </span></div>
+
+</div>
+<div id="footer">
+            <span>
+                Copyright © 2019 Curtails.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Fork me in <a href="" target="_blank"> github </a>.
+            </span>
+</div>
+
+
+<!--百度统计-->
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+</body>
+</html>

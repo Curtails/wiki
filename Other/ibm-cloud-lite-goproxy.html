@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
+    <link rel="shortcut icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <title>Install Goproxy with IBM Cloud Lite - Curtails's personal knowledge wiki</title>
+    <meta name="keywords" content="Technology, CTF, Network Security"/>
+    <meta name="description" content="A wiki website of Curtails when I learned new knowledgy."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width" />
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+        </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','','ga');
+
+        ga('create', 'UA-78529611-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+
+<body>
+<div id="container">
+    
+<div id="header">
+  <div id="post-nav"><a href="/wiki/">Home</a>&nbsp;»&nbsp;<a href="/wiki/#Other">Other</a>&nbsp;»&nbsp;Install Goproxy with IBM Cloud Lite</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Install Goproxy with IBM Cloud Lite</div>
+<div id="content">
+  <p>Goproxy is a powerful proxy.</p>
+<h2 id="ibm-cloud-lite">IBM Cloud Lite 特点</h2>
+<ul>
+<li>免费使用</li>
+<li>无需信用卡</li>
+<li>账户永不过期</li>
+</ul>
+<h2 id="ibm-cloud-lite_1">IBM Cloud Lite 创建</h2>
+<h3 id="ibm">注册IBM账户（略）</h3>
+<p><a href="https://cloud.ibm.com/">IBM Cloud官网</a></p>
+<ul>
+<li>注册有谷歌验证需要梯子</li>
+</ul>
+<h3 id="_1">创建资源</h3>
+<ul>
+<li>创建轻量PHP应用</li>
+</ul>
+<p><img alt="" src="https://i.loli.net/2019/07/18/5d304c07597c026701.png" /></p>
+<ul>
+<li>填写应用程序名称</li>
+<li>选择域（推荐cf.appdomain.cloud）</li>
+<li>选择位置（推荐达拉斯）</li>
+<li>选择价格套餐（免费最多可选256M）</li>
+</ul>
+<p><img alt="" src="https://i.loli.net/2019/07/18/5d304cd9efc4b73464.png" /></p>
+<ul>
+<li>创建之后启动该应用</li>
+</ul>
+<p><img alt="" src="https://i.loli.net/2019/07/18/5d304e0adf4c124800.png" /></p>
+<h2 id="goproxy">安装 Goproxy</h2>
+<h3 id="ssh">使用在线SSH连接应用</h3>
+<ul>
+<li>打开应用查看概述</li>
+</ul>
+<p><img alt="" src="https://i.loli.net/2019/07/18/5d304f6c869e518546.png" /></p>
+<ul>
+<li>点击运行时-SSH</li>
+</ul>
+<p><img alt="" src="https://i.loli.net/2019/07/18/5d304fce9e92d85479.png" /></p>
+<h3 id="goproxy_1">部署Goproxy服务端</h3>
+<ul>
+<li>在SSH执行以下命令即可</li>
+</ul>
+<div class="hlcode"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">vcap</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">htdocs</span>
+<span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">*</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/malaohu/goproxy-php.git &amp;&amp; mv goproxy-php/* ./</span>
+</pre></div>
+
+
+<h3 id="goproxy_2">部署Goproxy本地端</h3>
+<ul>
+<li>下载本地端</li>
+</ul>
+<p><a href="https://pan.black1ce.com/GAE%E7%B1%BB%E4%BB%A3%E7%90%86/Goproxy%2064%E4%BD%8D.7z">下载地址</a></p>
+<ul>
+<li>解压后打开php.json</li>
+</ul>
+<p><img alt="" src="https://i.loli.net/2019/07/18/5d30540907ea457856.png" /></p>
+<ul>
+<li>需要修改三个位置URL、Password 以及SSLVerify</li>
+</ul>
+<p>"URL":"访问应用程序URL//index.php"</p>
+<p>本地端Password与服务端goproxy.php中Password保持一致 本例中"Password":"123456"</p>
+<p>SSLVerify ：URL为https则为true；http则为flase</p>
+<ul>
+<li>修改浏览器端口为8080并运行goproxy-gui.exe即可使用</li>
+</ul>
+<h2 id="_2">提升使用体验</h2>
+<h3 id="switchyomega">使用SwitchyOmega管理代理</h3>
+<ul>
+<li>
+<p>安装chrome插件SwitchyOmega</p>
+</li>
+<li>
+<p>创建一个新的情景模式</p>
+</li>
+</ul>
+<p><img alt="" src="https://i.loli.net/2019/07/18/5d3056f77e8f587733.png" /></p>
+<ul>
+<li>使用Goproxy时切换代理；不使用时还原代理</li>
+</ul>
+<p><img alt="" src="https://i.loli.net/2019/07/18/5d30573c88d8e93437.png" /></p>
+<ul>
+<li>此扩展方便切换代理</li>
+</ul>
+<h3 id="php">防止PHP应用程序休眠</h3>
+<p>根据IBM Cloud规则，10天应用程序不活跃就要休眠。</p>
+<p>我们可以使用云监控避免不活跃导致休眠。</p>
+<p>国内的免费云监控很多，例如<a href="https://www.aliyun.com/product/jiankong/">阿里云云监控</a>。</p>
+<p><img alt="" src="https://i.loli.net/2019/07/18/5d305917a661467035.png" /></p>
+<ul>
+<li>点击站点监控-站点管理-新建监控任务</li>
+</ul>
+<p><img alt="" src="https://i.loli.net/2019/07/18/5d30598c98e2f46155.png" /></p>
+<ul>
+<li>按照说明设置即可</li>
+</ul>
+</div>
+<div id="content-footer">Created in <span class="create-date date"> 2019-07-18 01:01 </span></div>
+
+</div>
+<div id="footer">
+            <span>
+                Copyright © 2019 Curtails.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Fork me in <a href="" target="_blank"> github </a>.
+            </span>
+</div>
+
+
+<!--百度统计-->
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+</body>
+</html>

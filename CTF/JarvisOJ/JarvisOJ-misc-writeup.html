@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
+    <link rel="shortcut icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <title>Jarvis OJ-MISC-WriteUp - Curtails's personal knowledge wiki</title>
+    <meta name="keywords" content="Technology, CTF, Network Security"/>
+    <meta name="description" content="A wiki website of Curtails when I learned new knowledgy."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width" />
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+        </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','','ga');
+
+        ga('create', 'UA-78529611-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+
+<body>
+<div id="container">
+    
+<div id="header">
+  <div id="post-nav"><a href="/wiki/">Home</a>&nbsp;»&nbsp;<a href="/wiki/#CTF\JarvisOJ">CTF\JarvisOJ</a>&nbsp;»&nbsp;Jarvis OJ-MISC-WriteUp</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Jarvis OJ-MISC-WriteUp</div>
+<div id="content">
+  <p>Jarvis OJ-MISC-WriteUp<br />
+采集猜忌菜鸡</p>
+<h2 id="flag">FLAG</h2>
+<p>一张写着教练我想打ctf的图片<br />
+- winhex和binwalk无果<br />
+- 丢进stegsolve查看data extract 发现504B0304显然zip<br />
+- 保存打开含Linux文件 在win下解压报错 在kali下解压 <br />
+- 提升权限<code>chmod 777 1</code> 执行<code>./1</code><br />
+- 得到flag</p>
+<h2 id="shell">shell流量分析</h2>
+<p>下载解压得pcapng<br />
+- 小白扫描式分析 看到shell.php<br />
+- 在某tcp流中 打印了function.py 略读式一段py加密代码</p>
+<div class="hlcode"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># coding:utf-8</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Aklis&#39;</span>
+<span class="kn">from</span> <span class="nn">Crypto</span> <span class="kn">import</span> <span class="n">Random</span>
+<span class="kn">from</span> <span class="nn">Crypto.Cipher</span> <span class="kn">import</span> <span class="n">AES</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+
+<span class="k">def</span> <span class="nf">decrypt</span><span class="p">(</span><span class="n">encrypted</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">):</span>
+  <span class="n">IV</span> <span class="o">=</span> <span class="n">encrypted</span><span class="p">[:</span><span class="mi">16</span><span class="p">]</span>
+  <span class="n">aes</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">passphrase</span><span class="p">,</span> <span class="n">AES</span><span class="o">.</span><span class="n">MODE_CBC</span><span class="p">,</span> <span class="n">IV</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">aes</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">encrypted</span><span class="p">[</span><span class="mi">16</span><span class="p">:])</span>
+
+<span class="k">def</span> <span class="nf">encrypt</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">):</span>
+  <span class="n">IV</span> <span class="o">=</span> <span class="n">message</span><span class="p">[:</span><span class="mi">16</span><span class="p">]</span>
+  <span class="n">length</span> <span class="o">=</span> <span class="mi">16</span>
+  <span class="n">count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">padding</span> <span class="o">=</span> <span class="n">length</span> <span class="o">-</span> <span class="p">(</span><span class="n">count</span> <span class="o">%</span> <span class="n">length</span><span class="p">)</span>
+  <span class="n">message</span> <span class="o">=</span> <span class="n">message</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\0</span><span class="s">&#39;</span> <span class="o">*</span> <span class="n">padding</span>
+  <span class="n">aes</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">passphrase</span><span class="p">,</span> <span class="n">AES</span><span class="o">.</span><span class="n">MODE_CBC</span><span class="p">,</span> <span class="n">IV</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">aes</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="n">IV</span> <span class="o">=</span> <span class="s">&#39;YUFHJKVWEASDGQDH&#39;</span>
+<span class="n">message</span> <span class="o">=</span> <span class="n">IV</span> <span class="o">+</span> <span class="s">&#39;flag is hctf{xxxxxxxxxxxxxxx}&#39;</span>
+
+<span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="n">example</span> <span class="o">=</span> <span class="n">encrypt</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="s">&#39;Qq4wdrhhyEWe4qBF&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">example</span>
+<span class="n">example</span> <span class="o">=</span> <span class="n">decrypt</span><span class="p">(</span><span class="n">example</span><span class="p">,</span> <span class="s">&#39;Qq4wdrhhyEWe4qBF&#39;</span><span class="p">)</span> 
+<span class="k">print</span> <span class="n">example</span>
+</pre></div>
+
+
+<ul>
+<li>py中flag与IV组合经过encrypt函数加密 </li>
+<li>继续查看tcp流</li>
+</ul>
+<div class="hlcode"><pre><span class="o">&lt;</span><span class="n">mething</span><span class="o">/</span><span class="n">welcome</span><span class="o">/</span><span class="n">secret</span><span class="o">/</span><span class="n">not_important_secret</span><span class="o">/</span><span class="n">trash</span><span class="err">$</span> <span class="n">cat</span> <span class="n">fl</span>  
+<span class="n">cat</span> <span class="n">flag</span> 
+<span class="n">mbZoEMrhAO0WWeugNjqNw3U6Tt2C</span><span class="o">+</span><span class="n">rwpgpbdWRZgfQI3MAh0sZ9qjnziUKkV90XhAOkIs</span><span class="o">/</span><span class="n">OXoYVw5uQDjVvgNA</span><span class="o">==&lt;</span><span class="n">mething</span><span class="o">/</span><span class="n">welcome</span><span class="o">/</span><span class="n">secret</span>
+</pre></div>
+
+
+<ul>
+<li><code>mbZoEMrhAO0WWeugNjqNw3U6Tt2C+rwpgpbdWRZgfQI3MAh0sZ9qjnziUKkV90XhAOkIs/OXoYVw5uQDjVvgNA==</code>显然式flag且式base64编码</li>
+<li>flag解码在用给好得decrypt解密即可</li>
+</ul>
+<div class="hlcode"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># coding:utf-8</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Aklis&#39;</span>
+<span class="kn">from</span> <span class="nn">Crypto</span> <span class="kn">import</span> <span class="n">Random</span>
+<span class="kn">from</span> <span class="nn">Crypto.Cipher</span> <span class="kn">import</span> <span class="n">AES</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+
+<span class="k">def</span> <span class="nf">decrypt</span><span class="p">(</span><span class="n">encrypted</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">):</span>
+  <span class="n">IV</span> <span class="o">=</span> <span class="n">encrypted</span><span class="p">[:</span><span class="mi">16</span><span class="p">]</span>
+  <span class="n">aes</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">passphrase</span><span class="p">,</span> <span class="n">AES</span><span class="o">.</span><span class="n">MODE_CBC</span><span class="p">,</span> <span class="n">IV</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">aes</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">encrypted</span><span class="p">[</span><span class="mi">16</span><span class="p">:])</span>
+
+<span class="k">def</span> <span class="nf">encrypt</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">passphrase</span><span class="p">):</span>
+  <span class="n">IV</span> <span class="o">=</span> <span class="n">message</span><span class="p">[:</span><span class="mi">16</span><span class="p">]</span>
+  <span class="n">length</span> <span class="o">=</span> <span class="mi">16</span>
+  <span class="n">count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+  <span class="n">padding</span> <span class="o">=</span> <span class="n">length</span> <span class="o">-</span> <span class="p">(</span><span class="n">count</span> <span class="o">%</span> <span class="n">length</span><span class="p">)</span>
+  <span class="n">message</span> <span class="o">=</span> <span class="n">message</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\0</span><span class="s">&#39;</span> <span class="o">*</span> <span class="n">padding</span>
+  <span class="n">aes</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">passphrase</span><span class="p">,</span> <span class="n">AES</span><span class="o">.</span><span class="n">MODE_CBC</span><span class="p">,</span> <span class="n">IV</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">aes</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="n">string</span><span class="o">=</span><span class="s">&#39;mbZoEMrhAO0WWeugNjqNw3U6Tt2C+rwpgpbdWRZgfQI3MAh0sZ9qjnziUKkV90XhAOkIs/OXoYVw5uQDjVvgNA==&#39;</span>
+<span class="n">string64</span><span class="o">=</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">string64</span>
+<span class="k">print</span> <span class="n">decrypt</span><span class="p">(</span><span class="n">string64</span><span class="p">,</span><span class="s">&#39;Qq4wdrhhyEWe4qBF&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<ul>
+<li>hctf{n0w_U_w111_n0t_f1nd_me}</li>
+</ul>
+<h2 id="_1">远程登录协议</h2>
+<p>下载解压得pcapng hint：telnet<br />
+- 查看过滤telnet<br />
+- 查找flag 好几个一个个试</p>
+<h2 id="logo">炫酷得战队logo</h2>
+<p>下载得phrack.bmp<br />
+- 图片无法显示<br />
+- 修复不成 查了以下<code>89504E47</code>存在藏着一个png<br />
+- 创建复制导出png 打开也无法显示<br />
+- 改一下宽高 图片有内容非常模糊<br />
+- 图片由crc校验值（看不出）用此值反推宽高</p>
+<div class="hlcode"><pre>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">256</span><span class="p">):</span>
+        <span class="k">print</span> <span class="nb">hex</span><span class="p">(</span><span class="n">i</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="n">b</span><span class="o">=</span><span class="nb">hex</span><span class="p">(</span><span class="n">i</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="n">a</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;89504E470D0A1A0A0000000D49484452000001&#39;</span><span class="o">+</span><span class="n">b</span><span class="o">+</span><span class="s">&#39;000001000802000000F37A5E12000000017352474200AECE1CE9000000046741......A11F3FFE0B3B73B0698B976EA80000000049454E44AE426082&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&quot;hex&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s">&#39;1</span><span class="se">\\</span><span class="s">&#39;</span><span class="o">+</span><span class="n">b</span><span class="o">+</span><span class="s">&#39;.png&#39;</span><span class="p">,</span><span class="s">&quot;wb&quot;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> 
+</pre></div>
+
+
+<ul>
+<li>得出宽高改 </li>
+<li>得flag</li>
+</ul>
+<h2 id="_2">简单网管协议</h2>
+<ul>
+<li>直接notepad++打开搜flag</li>
+<li>傻了得去掉flag{}</li>
+<li>077149a68b9d4f25f52bb11530f44028</li>
+</ul>
+<h2 id="scan">SCAN</h2>
+<p>题目：有人在内网发起了大量扫描，而且扫描次数不止一次，请你从capture日志分析一下对方第4次发起扫描时什么时候开始的，请提交你发现包编号的sha256值(小写)<br />
+- Wireshark打开 发现开头是个icmp 猜测每次扫描icmp 因此过滤icmp<br />
+- 第四次扫描包编号 从后往前一个个猜吧 是<code>155989</code> sha256加密<br />
+- PCTF{0be2407512cc2a40bfb570464757fd56cd0a1d33f0bf3824dfed4f0119133c12}</p>
+</div>
+<div id="content-footer">Created in <span class="create-date date"> 2019-09-11 01:01 </span></div>
+
+</div>
+<div id="footer">
+            <span>
+                Copyright © 2019 Curtails.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Fork me in <a href="" target="_blank"> github </a>.
+            </span>
+</div>
+
+
+<!--百度统计-->
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
+    <link rel="shortcut icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <title>BugkuCTF-MISC-WriteUp - Curtails's personal knowledge wiki</title>
+    <meta name="keywords" content="Technology, CTF, Network Security"/>
+    <meta name="description" content="A wiki website of Curtails when I learned new knowledgy."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width" />
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+        </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','','ga');
+
+        ga('create', 'UA-78529611-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+
+<body>
+<div id="container">
+    
+<div id="header">
+  <div id="post-nav"><a href="/wiki/">Home</a>&nbsp;»&nbsp;<a href="/wiki/#CTF\BugKuCTF">CTF\BugKuCTF</a>&nbsp;»&nbsp;BugkuCTF-MISC-WriteUp</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">BugkuCTF-MISC-WriteUp</div>
+<div id="content">
+  <p>BugkuCTF-MISC-WriteUp</p>
+<h2 id="_1">签到</h2>
+<ul>
+<li>真就白给</li>
+</ul>
+<h2 id="_2">这是一张单纯的图片</h2>
+<p>一张普通图片。<br />
+- 查看属性没有信息<br />
+- WinHex查看信息末尾出有&amp; # 数字组成的的Unicode编码 利用工具转换成ASCII即可。<br />
+- key{you are right}</p>
+<h2 id="_3">隐写</h2>
+<p>图片隐写。<br />
+一个没有密码的rar文件，成功解压出一张图片，显示似乎是不完整的。<br />
+- 先看属性啥也没有<br />
+- 丢进winhex没有发现异常代码<br />
+- 丢进binwalk查看有无包含文件，只有zlib没有异常<br />
+- 图片显示残缺通常长宽比例被人为修改<br />
+- 回到winhex第二行000001F4 000001A4 修改后者与前者一致即可<br />
+- BUGKU{a1e5aSA}</p>
+<h2 id="telnet">telnet</h2>
+<p>telnet协议为tcp/ip协议一员。<br />
+一个没有密码压缩包解压得出networking.pcap。<br />
+- Wireshark打开<br />
+- 右键追踪流-TCP即可看到flag<br />
+- flag{d316759c281bf925d600be698a4973d5}</p>
+<h2 id="isccctf">眼见非实(ISCCCTF)</h2>
+<p>一个名字为zip的文件；给他加上后缀zip，解压出一个docx文件。<br />
+无法打开。<br />
+- 很有可能他不是docx文件，丢进binwalk<br />
+- 发现是一个zip文件，改后缀解压，得到许多xml文件。<br />
+- xml一个个看吧，在里面。<br />
+- flag{F1@g}</p>
+<h2 id="_4">啊哒</h2>
+<p>一个压缩文件解压出一个图片。<br />
+- 查看属性发现照相机型号是一串hex代码，利用工具转换成text<br />
+- 得到sdnisc_2018，不是flag暂时留着<br />
+- 丢进winhex在末尾处发现flag.txt字符串，图片一个包含这个文件<br />
+- 直接丢进binwalk，验证。果然含有flag.txt并且它本质上是一个压缩文件<br />
+- <code>binwalk -e ada.jpg
+  dd if=ada.jpg of=1 skip=218773 bs=1 
+  两者都可以分离出flag.txt压缩文件</code><br />
+- sdnisc_2018是压缩密码，解压得到真正的falg.txt<br />
+- flag{3XiF_iNf0rM@ti0n}</p>
+<h2 id="_5">又一张图片，还单纯吗</h2>
+<p>一张普通图片。<br />
+- 查看属性，无<br />
+- 丢进winhex，没啥异常<br />
+- 丢进binwalk，有多张图片<br />
+- <code>foremost 2.jpg
+  dd if=2.jpg of=1 skip=****** bs=1
+  二者皆可</code><br />
+- 分离出含有flag的图片<br />
+- falg{NSCTF_e6532a34928a3d1dadd0b049d5a3cc57}</p>
+<h2 id="_6">猜</h2>
+<p>题目说图片这位美女的名字即flag<br />
+- 百度识图/谷歌识图<br />
+- 如果你认识亦非姐姐那就是姐姐白给你的。</p>
+<h2 id="_7">宽带泄露</h2>
+<p>flag为宽带用户名；下载到conf.bin文件。<br />
+- 丢进routerpassview <br />
+- 直接搜username得到<Username val=053700357621 /><br />
+- flag{053700357621}</p>
+<h2 id="2">隐写2</h2>
+<p>图像隐写。<br />
+下载到welcome.jpg 打开嘲讽了我一波。<br />
+- 看属性无内容没b数<br />
+- 丢进winhex尾部看到了flag.rar字样果然还是先丢进binwalk好了<br />
+- binwalk直接<code>binwalk -e Welcome_.jpg/foremost Welcome_.jpg</code>走一波<br />
+- 拿到提示.jpg及flag.rar<br />
+- 提示balabala一大堆告诉我压缩文件密码三位数<br />
+- ARCHPR_ha爆破走起，得出密码871<br />
+- 解压得3.jpg无属性信息<br />
+- 丢进winhex在某位发现<code>f1@g{eTB1IEFyZSBhIGhAY2tlciE=}</code><br />
+- flag里面还有个base64，解密即可<br />
+- flag{y0u Are a h@cker!}<br />
+- bugku服务器bug？flag incorrect？</p>
+<h2 id="_8">多种方法解决</h2>
+<p>题目提示会看到一张二维码图片。<br />
+下载得到zip文件，解压的KEY.exe<br />
+- 会看到图片，丢进winhex<br />
+- 发现代码开头有<code>data:image/jpg;base64</code><br />
+- 代码全部为base64编码，利用工具把base编码转换成图片<br />
+- 得到二维码扫面即可<br />
+- KEY{dca57f966e4e4e31fd5b15417da63269}</p>
+<h2 id="_9">闪的好快</h2>
+<p>一张二维码gif<br />
+- 丢进Stegsolve-打开gif-Analyse-Frame Browser<br />
+- 看到十八张二维码，挨个扫<br />
+- SYC{F1aSh_so_f4sT}</p>
+<h2 id="come_game">come_game</h2>
+<p>留坑</p>
+<h2 id="_10">白哥的鸽子</h2>
+<p>得到名为jpg的文件。<br />
+- 价格jpg后缀看到鸽子，无属性信息<br />
+- 丢进winhex，没看出异常<br />
+- 丢进binwalk正常<br />
+- 再次查看winhex，末尾处字符串规整且含有flag字符（分散开）且结尾出有@填充<br />
+- 猜测是栅栏密码字符串，用工具解码<br />
+- flag{w22_is_v3ry_cool}</p>
+<h2 id="linux">linux</h2>
+<p>题目提出linux基础问题。<br />
+解压的flag文件。<br />
+- 在kali使用<code>cat flag</code>命令<br />
+- 末尾打印出flag<br />
+- key{feb81d3834e2423c9903f4755464060b}</p>
+<h2 id="3">隐写3</h2>
+<p>得到压缩文件，解压出一张图片，打开可显示但不完整<br />
+- 无属性信息<br />
+- 丢进winhex 有了前面经验直接看第二行修改比例<br />
+- 修改成<code>000002A7 000002A7</code><br />
+- 图片显示完整看到flag<br />
+- flag{He1l0_d4_ba1}</p>
+<h2 id="_11">做个游戏</h2>
+<p>题目让我坚持60秒，下载得到jar文件；打开嘲讽我只能坚持6秒。<br />
+- jar可改后缀为zip解压能看到源文件<br />
+- 丢进jd-gui可查看源代码<br />
+- cn.bjsxt.plane.PlaneGameFrame中找到flag<br />
+- 拿到flag{RGFqaURhbGlfSmlud2FuQ2hpamk=}把里面base64解码一下<br />
+- flag{DajiDali_JinwanChiji}</p>
+<h2 id="_12">想蹭网先解开密码</h2>
+<p>留坑</p>
+<h2 id="linux2">linux2</h2>
+<p>题目高速key的格式是KEY{}<br />
+拿到压缩包解压得到名为brave文件<br />
+- 没头绪丢进binwalk发现含有jpg<br />
+- 分离得出jpg，图片显示的是flag不是key<br />
+- 直接用notepad++打开brave搜索key能找出key{}<br />
+- 正确做法是在应该在linux中<br />
+<code>→ ∮ ← :~/桌面# grep "KEY" -an brave 
+  PS：a代表二进制问价、n代表字符串出现的位置</code><br />
+- KEY{24f3627a86fc740a7f36ee2c7a1c124a}</p>
+<h2 id="_13">账号被盗了</h2>
+<p>打开题目所给网址-点击getflag-显示not admin<br />
+- 久违的burpsuite_pro抓包<br />
+  - 监听在Raw中发现<code>Cookie: isadmin=flase</code><br />
+  - send to reptater 把值改成true；go<br />
+  - 得到 http://120.24.86.145:9001/123.exe<br />
+- 或者在firefox中打开控制台<br />
+  - 找到存储-cookie-把两个flase值改成true<br />
+- 这个网址打不开看来其他的writeup http://123.206.87.240:9001/123.exe<br />
+- 下载打开是一个cf刷枪软件<br />
+- 打开Wireshark选择环境，开始捕获<br />
+- 刷枪，停止捕获，分析<br />
+- 发现含有smtp邮箱连接，显然有问题，选中右键追踪流分析<br />
+- 看到两条base64字符串<br />
+<code>YmtjdGZ0ZXN0QDE2My5jb20=
+  YTEyMzQ1Ng==</code><br />
+- 解码的邮箱的账号和密码，登入<br />
+- 找到草稿箱中一封邮件告诉我们<code>KEY{sg1H78Si9C0s99Q}</code><br />
+- 然而真的flag是<code>flag{182100518+725593795416}</code>，上面是假的</p>
+<h2 id="_14">细心的大象</h2>
+<p>下载得到zip，解压的jpg<br />
+- 看属性得到<code>TVNEUzQ1NkFTRDEyM3p6</code>,base64解码得<code>MSDS456ASD123zz</code><br />
+- 丢进winhex无异常<br />
+- 丢进binwalk <code>foremost 1.jpg</code>,得到压缩文件，输入MSDS456ASD123zz解压<br />
+- 查看2.png属性无信息，打开显示残缺<br />
+- 丢进winhex修改长宽比例为<code>000001F4 000001F4</code><br />
+- 打开图片得flag<br />
+- BUGKU{a1e5aSA}</p>
+<h2 id="08067ctf">爆照(08067CTF)</h2>
+<p>下载得一张图片，穹妹？<br />
+题目提示flag由xxx_xxx_xxx，猜测三个字段组成<br />
+- 查看属性无信息<br />
+- 丢进binwalk，发现含有zip<code>foremost 8.jpg</code>分离<br />
+- 得到压缩包解压得8个文件和一张gif<br />
+- 8个文件没头绪丢进kali里竟然都能识别出图片<br />
+- 8文件丢进winhex 末尾处有字符串<code>flag</code><br />
+- 88文件有二维码扫描得出<code>bilibili</code><br />
+- 888看属性有<code>c2lsaXNpbGk=</code> 解码<code>silisili</code><br />
+- 8888丢进binwalk含有压缩文件解压得二维码扫描得出<code>panama</code><br />
+- 剩下文件没啥<br />
+- 得出flag，这题绕<br />
+- flag{bilibili_silisili_panama}</p>
+<h2 id="_15">猫片(安恒)</h2>
+<p>提示：LSB BGR NTFS<br />
+图片隐写<br />
+下载得到名为png图片，改后缀看看图片吸一吸<br />
+- 看属性啥也没有<br />
+- 丢进winhex没看出来<br />
+- 丢进binwalk无异常<br />
+- 想起提示丢进Stegsolve-Analyse-Data Extract<br />
+- RGB勾选000-LSBfirst-BGR preview一下发现<br />
+<code>fffe 89504e470d0a</code><br />
+  明显png但是是以fffe开头 保存丢进winhex<br />
+- 移除fffe保存能打开图片是一张而二维码，残缺<br />
+- 残缺了就改长宽<code>00000118 0000008C</code>前后一致即可<br />
+- 扫描二维码得出网盘地址<code>https://pan.baidu.com/s/1pLT2J4f</code><br />
+- 下载的flag.rar解压的txt内容没有flag顺便嘲讽一波<br />
+- 看一下Hint ntfs没用到 本题存在ntfs数据流<br />
+- 使用ntfstreamseditor工具可搜索解压导出的文件夹，可得到数据流flag.pyc导出<br />
+- 注意解压要用winrar这款软件！？！？？？？<br />
+- 使用在线工具反编译得出代码<br />
+- 编写解密代码 找来前辈的<br />
+  ```python<br />
+  def decode():<br />
+    ciphertext = [<br />
+        '96', '65', '93', '123', '91', '97', '22', '93', '70', '102', '94',<br />
+        '132', '46', '112', '64', '97', '88', '80', '82', '137', '90', '109',<br />
+        '99', '112'<br />
+    ]<br />
+    ciphertext.reverse()<br />
+    flag = ''<br />
+  for i in range(len(ciphertext)):<br />
+        if i % 2 == 0:<br />
+            s = int(ciphertext[i]) - 10<br />
+        else:<br />
+            s = int(ciphertext[i]) + 10<br />
+        s = chr(i ^ s)<br />
+        flag += s<br />
+    return flag</p>
+<p>def main():<br />
+    flag = decode()<br />
+    print(flag)</p>
+<p>if <strong>name</strong> == '<strong>main</strong>':<br />
+        main()<br />
+  ```<br />
+- 运行得出flag<br />
+- flag{Y@e_Cl3veR_C1Ever!}</p>
+<h2 id="_16">多彩</h2>
+<p>下载得到一张名为lipstick.png普通图片<br />
+- 看属性无信息<br />
+- 这题涉及口红色号、白学家？！ 太难留坑不做了</p>
+<h2 id="_17">旋转跳跃</h2>
+<p>题目：熟悉的声音中貌似又隐藏着啥，key：syclovergeek<br />
+下载得到压缩文件解压得sycgeek-mp3.mp3<br />
+- 用MP3Steno结合key解码<br />
+<code>Decode.exe -X -P syclovergeek sycgeek-mp3.mp3</code><br />
+- 得到 sycgeek-mp3.mp3.txt打开即密码<br />
+- SYC{Mp3_B15b1uBiu_W0W}</p>
+<h2 id="_18">普通的二维码</h2>
+<p>下载得misc80.zip，解压得misc100.bmp 是一张二维码<br />
+- 扫描的文本<code>哈哈!就不告诉你flag就在这里!</code><br />
+- 看一眼属性无信息<br />
+- 丢进binwalk无异常<br />
+- 丢进winhex末尾处有字符串<br />
+<code>146154141147173110141166145137171060125137120171137163143162151160164137117164143137124157137124145156137101163143151151041175</code><br />
+- 分析一波数字最带为7 感觉八进制，转ASCII试试（三个数字为一组）<br />
+- flag{Have_y0U_Py_script_Otc_To_Ten_Ascii!}</p>
+<h2 id="_19">乌云邀请码</h2>
+<p>下载解压得misc50.png 图片内容是一份来自乌云得邮件信息（哀悼乌云）<br />
+- 无属性信息<br />
+- 丢进binwalk无异常<br />
+- 丢进winhex无异常<br />
+- 考虑隐写丢进Stegsolve lbsfirst及BGR<br />
+- 看到flag 多余空格删掉<br />
+- flag{Png_Lsb_Y0u_K0nw!}</p>
+<h2 id="_20">神秘的文件</h2>
+<p>下载解压包解压得logo.png和flag.zip flag.zip有密码<br />
+- flag.zip丢进winhex查看是否伪加密<br />
+- 全局加密和全局方式标记皆为<code>0900</code>，真加密<br />
+- 丢进ARCHPR_ha 我们选择明文攻击因为zip文件中含有logo.png 我们有此png 压缩png得logo.zip<br />
+- ！！要用winrar这个软件压缩:) 成功得密码<code>q1w2e3r4</code><br />
+- 解压得docx打不开 丢进binwalk分离<br />
+- 得flag.txt<br />
+- flag{d0cX_1s_ziP_file}</p>
+<h2 id="_21">论剑</h2>
+<p>题目赋诗一首：<br />
+剑客<br />
+十年磨一剑，霜刃未曾试。<br />
+今日把示君，谁有不平事。<br />
+下载得lunjian.jpg 正常打开显示ctf论剑场<br />
+- 查看属性无信息<br />
+- 丢进binwalk分理出一样的图片未果<br />
+- 丢进Stegsolve未果<br />
+- 丢进winhex发现<br />
+<code>1101101 01111001 01101110 01100001 01101101 01100101 01101001 01110011 01101011 01100101 01111001 00100001 00100001 00100001 01101000 01101000 01101000</code><br />
+  猜测二进制转换成ASCII<br />
+- 得出<code>mynameiskey!!!hhh</code><br />
+- 修改图片长宽比由于是jpg FFC2 后3个字节的4个字节是高宽<br />
+- 能显示有残缺的字符串图片<br />
+- 继续分析jpg 01101000紧跟着7z标识 修复标识为<code>27 7A BC AF 27 1C</code><br />
+- 丢进binwalk分理处7z输入<code>mynameiskey!!!hhh</code>解压得图片继续修改高宽<br />
+- 显示残缺字符串图片与上一张互补<br />
+- 得到字符串 base16解码<br />
+- flag{my_name_H!!H}</p>
+<h2 id="_22">图穷匕见</h2>
+<p>下载得正常图片paintpaintpaint.jpg<br />
+- 看属性有信息“会画图吗？”<br />
+- 丢进winhex发现hex代码 解码得出一堆坐标 去掉()和逗号换为空格保存为txt<br />
+- 利用gnuplot根据坐标画图得出二维码<br />
+<code>gnuplot
+  plot "1.txt"</code><br />
+- 扫码得出flag<br />
+- flag{40fc0a979f759c8892f4dc045e28b820}</p>
+<h2 id="convert">convert</h2>
+<p>convert意思为转换 下载得到内容很长的txt 由二进制组成<br />
+- 转换成hex 发现<br />
+<code>52617221 ......</code><br />
+- 发现是以<code>5261 7221</code>开头是rar标识 打开winhex写入hex保存为rar<br />
+- 解压得图像 看属性得base64 解码<br />
+- flag{01a25ea3fd6349c6e635a1d0196e75fb}</p>
+<h2 id="_23">听首音乐</h2>
+<p>题目：听首音乐放松放松吧~<br />
+我：好的我不做了你能给我flag吗？<br />
+获得stego100.wav 带上耳机听听<br />
+喵喵喵？只有右声道？左声道好像听见了电报声？！<br />
+- 丢进Audacity拉长轨道能看见莫斯电码<br />
+<code>..... -... -.-. ----. ..--- ..... -.... ....- ----. -.-. -... ----- .---- ---.. ---.. ..-. ..... ..--- . -.... .---- --... -.. --... ----- ----. ..--- ----. .---- ----. .---- -.-.</code><br />
+- 解码即可<br />
+- flag为5BC925649CB0188F52E617D70929191C</p>
+</div>
+<div id="content-footer">Created in <span class="create-date date"> 2019-08-21 01:01 </span></div>
+
+</div>
+<div id="footer">
+            <span>
+                Copyright © 2019 Curtails.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Fork me in <a href="" target="_blank"> github </a>.
+            </span>
+</div>
+
+
+<!--百度统计-->
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+</body>
+</html>
