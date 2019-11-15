@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Linux-wsl-常用命令
+title: "Linux-wsl-常用命令"
 date: 2019-09-19 01:01
 ---
 
