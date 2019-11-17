@@ -74,7 +74,30 @@ XSS攻击分为三种：反射型、存储型、DOM型</p>
 
 
 <h1 id="xss_4">反射型XSS</h1>
-<p>code/source/XSS/xss1.php</p>
+<h2 id="_2">示例</h2>
+<p>code/source/XSS/xss1.php<br />
+关键代码：</p>
+<div class="hlcode"><pre><span class="cp">&lt;?php</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;xss_input_value&#39;</span><span class="p">]))</span> <span class="p">{</span>
+            <span class="k">echo</span> <span class="s1">&#39;&lt;input type=&quot;text&quot; value=&quot;&#39;</span><span class="o">.</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;xss_input_value&#39;</span><span class="p">]</span><span class="o">.</span><span class="s1">&#39;&quot;&gt;&#39;</span><span class="p">;</span>
+        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+            <span class="k">echo</span> <span class="s1">&#39;&lt;input type=&quot;text&quot; value=&quot;输出&quot;&gt;&#39;</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+
+
+<p>构造payload</p>
+<div class="hlcode"><pre><span class="n">xss_input_value</span><span class="o">=</span><span class="s">&quot;&gt;&lt;img src=1 onerror=alert(xss)/&gt;</span>
+</pre></div>
+
+
+<h2 id="_3">分析</h2>
+<p>payload发生步骤<br />
+- 通过GET传参xss_input_value值<br />
+- 拼接成<code>&lt;input type="text" value=""&gt;&lt;img src=1 onerror=alert(xss)/&gt;"&gt;</code><br />
+- echo输出img标签 触发xss</p>
+<h2 id="xss_5">存储型xss攻击</h2>
 </div>
 <div id="content-footer"></div>
 
