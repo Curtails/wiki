@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "XSS"
+title: "XSS练习"
 date: 2019-10-29 01:01
 ---
 
@@ -17,8 +17,7 @@ https://xss.haozi.me
 ```
 
 ## xss-demo
-[github](https://github.com/haozi/xss-demo/)
-
+[github](https://github.com/haozi/xss-demo/)  
 [在线地址](https://xss.haozi.me)
 
 拼凑所需语句即可不必关心原语句完整性？？浏览器容错性？？
