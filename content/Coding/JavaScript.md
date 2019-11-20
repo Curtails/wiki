@@ -8,7 +8,7 @@ data: 2019-11-20 10:30
 
 # JavaScript简介 
 [菜鸟教程 js](https://www.runoob.com/js/js-tutorial.html)  
-它能干什么？ 
+
 [W3school js](https://www.w3school.com.cn/js/index.asp)
 ## 直接写入HTML输出流
 ```html
@@ -346,8 +346,9 @@ var c = {
 ```
 
 ## 数据类型的简单转换
+
 - 利用toString把数值转换成字符串
-- 
+
 ```html
 <script>
 	var a=100;
