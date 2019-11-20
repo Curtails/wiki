@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
+    <link rel="shortcut icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <title>Windows-process - Curtails's personal knowledge wiki</title>
+    <meta name="keywords" content="Technology, CTF, Network Security"/>
+    <meta name="description" content="A wiki website of Curtails when I learned new knowledgy."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width" />
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+        </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','','ga');
+
+        ga('create', 'UA-78529611-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+
+<body>
+<div id="container">
+    
+<div id="header">
+  <div id="post-nav"><a href="/wiki/">Home</a>&nbsp;»&nbsp;<a href="/wiki/#Other">Other</a>&nbsp;»&nbsp;Windows-process</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Windows-process</div>
+<div id="content">
+  <h2 id="tartupinfo">TARTUPINFO结构体 指定进程窗口特性</h2>
+<div class="hlcode"><pre><span class="k">typedef</span> <span class="k">struct</span> <span class="n">_STARTUPINFO</span> 
+<span class="p">{</span> 
+    <span class="n">DWORD</span> <span class="n">cb</span><span class="p">;</span>                <span class="c1">//包含STARTUPINFO结构中的字节数.如果Microsoft将来扩展该结构,它可用作版本控制手段.应用程序必须将cb初始化为sizeof(STARTUPINFO) </span>
+    <span class="n">PSTR</span> <span class="n">lpReserved</span><span class="p">;</span>         <span class="c1">//保留。必须初始化为NULL</span>
+    <span class="n">PSTR</span> <span class="n">lpDesktop</span><span class="p">;</span>          <span class="c1">//用于标识启动应用程序所在的桌面的名字。如果该桌面存在，新进程便与指定的桌面相关联。如果桌面不存在，便创建一个带有默认属性的桌面，并使用为新进程指定的名字。如果lpDesktop是NULL（这是最常见的情况 ),那么该进程将与当前桌面相关联 </span>
+    <span class="n">PSTR</span> <span class="n">lpTitle</span><span class="p">;</span>            <span class="c1">//用于设定控制台窗口的名称。如果lpTitle是NULL，则可执行文件的名字将用作窗口名.This parameter must be NULL for GUI or console processes that do not create a new console window.</span>
+    <span class="n">DWORD</span> <span class="n">dwX</span><span class="p">;</span>               <span class="c1">//用于设定应用程序窗口相对屏幕左上角位置的x 坐标（以像素为单位）。 </span>
+    <span class="n">DWORD</span> <span class="n">dwY</span><span class="p">;</span>               <span class="c1">//对于GUI processes用CW_USEDEFAULT作为CreateWindow的x、y参数，创建它的第一个重叠窗口。若是创建控制台窗口的应用程序，这些成员用于指明相对控制台窗口的左上角的位置</span>
+    <span class="n">DWORD</span> <span class="n">dwXSize</span><span class="p">;</span>           <span class="c1">//用于设定应用程序窗口的宽度（以像素为单位）</span>
+    <span class="n">DWORD</span> <span class="n">dwYSize</span><span class="p">;</span>           <span class="c1">//子进程将CW_USEDEFAULT 用作CreateWindow 的nWidth、nHeight参数来创建它的第一个重叠窗口。若是创建控制台窗口的应用程序，这些成员将用于指明控制台窗口的宽度 </span>
+    <span class="n">DWORD</span> <span class="n">dwXCountChars</span><span class="p">;</span>     <span class="c1">//用于设定子应用程序的控制台窗口的宽度（屏幕显示的字节列）和高度（字节行）（以字符为单位） </span>
+    <span class="n">DWORD</span> <span class="n">dwYCountChars</span><span class="p">;</span> 
+    <span class="n">DWORD</span> <span class="n">dwFillAttribute</span><span class="p">;</span>   <span class="c1">//用于设定子应用程序的控制台窗口使用的文本和背景颜色 </span>
+    <span class="n">DWORD</span> <span class="n">dwFlags</span><span class="p">;</span>           <span class="c1">//请参见下一段和表4-7 的说明 </span>
+    <span class="n">WORD</span> <span class="n">wShowWindow</span><span class="p">;</span>        <span class="c1">//用于设定如果子应用程序初次调用的ShowWindow 将SW_*作为nCmdShow 参数传递时，该应用程序的第一个重叠窗口应该如何出现。本成员可以是通常用于ShowWindow 函数的任何一个SW_*标识符，除了SW_SHOWDEFAULT. </span>
+    <span class="n">WORD</span> <span class="n">cbReserved2</span><span class="p">;</span>        <span class="c1">//保留。必须被初始化为0 </span>
+    <span class="n">PBYTE</span> <span class="n">lpReserved2</span><span class="p">;</span>       <span class="c1">//保留。必须被初始化为NULL</span>
+    <span class="n">HANDLE</span> <span class="n">hStdInput</span><span class="p">;</span>        <span class="c1">//用于设定供控制台输入和输出用的缓存的句柄。按照默认设置，hStdInput 用于标识键盘缓存，hStdOutput 和hStdError用于标识控制台窗口的缓存 </span>
+    <span class="n">HANDLE</span> <span class="n">hStdOutput</span><span class="p">;</span> 
+    <span class="n">HANDLE</span> <span class="n">hStdError</span><span class="p">;</span> 
+<span class="p">}</span> <span class="n">STARTUPINFO</span><span class="p">,</span> <span class="o">*</span><span class="n">LPSTARTUPINFO</span><span class="p">;</span>
+</pre></div>
+
+
+<h2 id="process_information">PROCESS_INFORMATION存储线程的相关信息</h2>
+<div class="hlcode"><pre>    <span class="k">typedef</span> <span class="k">struct</span> <span class="n">_PROCESS_INFORMATION</span> <span class="p">{</span> 
+        <span class="n">HANDLE</span> <span class="n">hProcess</span><span class="p">;</span> <span class="c1">//存放每个对象的与进程相关的句柄 </span>
+        <span class="n">HANDLE</span> <span class="n">hThread</span><span class="p">;</span>        <span class="c1">//返回的线程句柄。 </span>
+        <span class="n">DWORD</span> <span class="n">dwProcessId</span><span class="p">;</span>    <span class="c1">//用来存放进程ID号 </span>
+        <span class="n">DWORD</span> <span class="n">dwThreadId</span><span class="p">;</span>      <span class="c1">//用来存放线程ID号 </span>
+    <span class="p">}</span> <span class="n">PROCESS_INFORMATION</span><span class="p">,</span> <span class="o">*</span><span class="n">PPROCESS_INFORMATION</span><span class="p">,</span> <span class="o">*</span><span class="n">LPPROCESS_INFORMATION</span><span class="p">;</span>
+</pre></div>
+
+
+<h2 id="processentry32">PROCESSENTRY32 存放进程信息快照</h2>
+<div class="hlcode"><pre> <span class="n">PROCESSENTRY32</span><span class="err">结构如下：</span>    
+  <span class="k">typedef</span>   <span class="k">struct</span>   <span class="n">tagPROCESSENTRY32</span>   <span class="p">{</span>    
+  <span class="n">DWORD</span>   <span class="n">dwSize</span><span class="p">;</span>   <span class="c1">//   结构大小；    </span>
+  <span class="n">DWORD</span>   <span class="n">cntUsage</span><span class="p">;</span>   <span class="c1">//   此进程的引用计数；    </span>
+  <span class="n">DWORD</span>   <span class="n">th32ProcessID</span><span class="p">;</span>   <span class="c1">//   进程ID;    </span>
+  <span class="n">DWORD</span>   <span class="n">th32DefaultHeapID</span><span class="p">;</span>   <span class="c1">//   进程默认堆ID；    </span>
+  <span class="n">DWORD</span>   <span class="n">th32ModuleID</span><span class="p">;</span>   <span class="c1">//   进程模块ID；    </span>
+  <span class="n">DWORD</span>   <span class="n">cntThreads</span><span class="p">;</span>   <span class="c1">//   此进程开启的线程计数；    </span>
+  <span class="n">DWORD</span>   <span class="n">th32ParentProcessID</span><span class="p">;</span><span class="c1">//   父进程ID；    </span>
+  <span class="n">LONG</span>   <span class="n">pcPriClassBase</span><span class="p">;</span>   <span class="c1">//   线程优先权；    </span>
+  <span class="n">DWORD</span>   <span class="n">dwFlags</span><span class="p">;</span>   <span class="c1">//   保留；    </span>
+  <span class="kt">char</span>   <span class="n">szExeFile</span><span class="p">[</span><span class="n">MAX_PATH</span><span class="p">];</span>   <span class="c1">//   进程全名；    </span>
+  <span class="p">}</span>   <span class="n">PROCESSENTRY32</span><span class="p">;</span>
+</pre></div>
+
+
+<h2 id="createtoolhelp32snapshot">CreateToolhelp32Snapshot</h2>
+<div class="hlcode"><pre><span class="n">HANDLE_WINAPI</span> <span class="nf">CreateToolHelp32Snapshot</span><span class="p">(</span>
+                                       <span class="n">DWORD</span> <span class="n">dwFlags</span><span class="p">,</span>   <span class="c1">//指定了获取系统进程快照的类型</span>
+                                       <span class="n">DWORD</span> <span class="n">th32ParentProcessID</span><span class="c1">//指向要获取进程快照的ID，获取系统内所有进程快照时是0</span>
+                                      <span class="p">);</span>
+</pre></div>
+
+
+<h2 id="process32firstprocess32next">Process32First与Process32Next</h2>
+<p>如果<code>CreateToolhelp32Snapshot</code>函数调用成功返回快照句柄 需要调用Process32First函数查找系统进程的第一个进程</p>
+<div class="hlcode"><pre><span class="n">BOOL</span> <span class="nf">Process32First</span><span class="p">(</span>
+                    <span class="n">HANDLE</span> <span class="n">hSnapshot</span><span class="p">,</span>
+                    <span class="n">LPROCESSENTRY32</span> <span class="n">lppe</span>
+                   <span class="p">);</span>
+</pre></div>
+
+
+<p>再调用Process32Next函数列出系统中其它进程</p>
+<div class="hlcode"><pre><span class="n">BOOL</span> <span class="nf">Process32Next</span><span class="p">(</span>
+                    <span class="n">HANDLE</span> <span class="n">hSnapshot</span><span class="p">,</span>
+                    <span class="n">LPROCESSENTRY32</span> <span class="n">lppe</span>
+                   <span class="p">);</span>
+</pre></div>
+
+
+<p>一个输出系统进程的demo</p>
+<div class="hlcode"><pre>    <span class="err">#</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">stdio</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
+    <span class="err">#</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">windows</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
+    <span class="err">#</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">string</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
+    <span class="err">#</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">tlhelp32</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
+    <span class="kt">int</span> <span class="n">GetProcess</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">//PROCESSENTRY32结构体，保存进程具体信息</span>
+        <span class="n">PROCESSENTRY32</span> <span class="n">pe32</span><span class="p">;</span>
+        <span class="n">pe32</span><span class="p">.</span><span class="n">dwSize</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">pe32</span><span class="p">);</span>
+        <span class="c1">//获得系统进程快照的句柄</span>
+        <span class="n">HANDLE</span> <span class="n">hProcessSnap</span> <span class="o">=</span> <span class="n">CreateToolhelp32Snapshot</span><span class="p">(</span><span class="n">TH32CS_SNAPPROCESS</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">hProcessSnap</span> <span class="o">==</span> <span class="n">INVALID_HANDLE_VALUE</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;CreateToolhelp32Snapshot error.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">//首先获得第一个进程</span>
+        <span class="n">BOOL</span> <span class="n">bProcess</span> <span class="o">=</span> <span class="n">Process32First</span><span class="p">(</span><span class="n">hProcessSnap</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pe32</span><span class="p">);</span>
+        <span class="c1">//循环获得所有进程</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">bProcess</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">//打印进程名和进程ID</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%ls----%d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">pe32</span><span class="p">.</span><span class="n">szExeFile</span><span class="p">,</span> <span class="n">pe32</span><span class="p">.</span><span class="n">th32ProcessID</span><span class="p">);</span>
+            <span class="n">bProcess</span> <span class="o">=</span> <span class="n">Process32Next</span><span class="p">(</span><span class="n">hProcessSnap</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pe32</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">CloseHandle</span><span class="p">(</span><span class="n">hProcessSnap</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">GetProcess</span><span class="p">();</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<div id="content-footer">Created in <span class="create-date date"> 2019-10-13 01:01 </span></div>
+
+</div>
+<div id="footer">
+            <span>
+                Copyright © 2019 Curtails.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Fork me in <a href="" target="_blank"> github </a>.
+            </span>
+</div>
+
+
+<!--百度统计-->
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+</body>
+</html>

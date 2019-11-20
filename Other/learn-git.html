@@ -1,0 +1,227 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
+    <link rel="shortcut icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/wiki/favicon.ico" type="image/x-icon">
+    <title>Learn Git - Curtails's personal knowledge wiki</title>
+    <meta name="keywords" content="Technology, CTF, Network Security"/>
+    <meta name="description" content="A wiki website of Curtails when I learned new knowledgy."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width" />
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+        </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','','ga');
+
+        ga('create', 'UA-78529611-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+
+<body>
+<div id="container">
+    
+<div id="header">
+  <div id="post-nav"><a href="/wiki/">Home</a>&nbsp;»&nbsp;<a href="/wiki/#Other">Other</a>&nbsp;»&nbsp;Learn Git</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Learn Git</div>
+<div id="content">
+  <p>写的很混乱，复习用。</p>
+<ul>
+<li>原理</li>
+<li>命令</li>
+<li>vscode&amp;git</li>
+</ul>
+<h2 id="_1">版本管理功能</h2>
+<h3 id="_2">回溯</h3>
+<p>git采用全量存储，类似于Content-addressable的文件系统。</p>
+<p><strong>.git目录</strong>：版本库存储不同版本的文件。</p>
+<p><strong>文件名</strong>：.git中的文件采用SHA1函数值（40位）作为文件名。</p>
+<p><strong>版本库与代码库的文件对应方式</strong>：使用树结构可描述文件名、目录结构及SHA1。类似于快照。</p>
+<p><strong>Commit（提交）</strong>：提交记录快照、记录人信息及上一次提交的SHA1。</p>
+<p><img alt="commit" src="https://raw.githubusercontent.com/Curtails/learninggit/master/image/commit.png" /></p>
+<p><strong>暂存区（index）</strong>：介于代码库和版本库中的缓冲区域。</p>
+<p>以下为暂存区分别与代码库和版本库的状态比较：</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>暂存区</th>
+<th>SHA1</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在</td>
+<td>在</td>
+<td>不匹配</td>
+<td>modified</td>
+</tr>
+<tr>
+<td>不存在</td>
+<td>在</td>
+<td></td>
+<td>removed</td>
+</tr>
+<tr>
+<td>在</td>
+<td>不存在</td>
+<td></td>
+<td>added</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>暂存区</th>
+<th>.git</th>
+<th>SHA1</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>在</td>
+<td>在</td>
+<td>不匹配</td>
+<td>modified</td>
+</tr>
+<tr>
+<td>不存在</td>
+<td>在</td>
+<td></td>
+<td>missing</td>
+</tr>
+<tr>
+<td>在</td>
+<td>不存在</td>
+<td></td>
+<td>untracked</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_3">协同</h3>
+<ul>
+<li>
+<p>分布式版本控制。</p>
+</li>
+<li>
+<p>服务端与本地端都有一份完好的版本库。</p>
+</li>
+</ul>
+<p>push：将本地版本库的代码推送到服务器。</p>
+<p>pull：将服务器端的代码拉取到本地。</p>
+<h3 id="_4">分支</h3>
+<p>默认分支为master。</p>
+<p>分支是指向提交的指针，可以在不同的分支上开发产生了新的提交，开发完成后就可以合并成主干了。</p>
+<p>例如有两个分支如下图所示：</p>
+<p><img alt="branch1" src="https://raw.githubusercontent.com/Curtails/learninggit/master/image/branch1.png" /></p>
+<ul>
+<li>
+<p>两个分支功能开发完成后，开始合并。</p>
+</li>
+<li>
+<p><strong>第一步合并</strong>将master指向weixin并删掉weixin分支。</p>
+</li>
+</ul>
+<p><img alt="branch2" src="https://raw.githubusercontent.com/Curtails/learninggit/master/image/branch2.png" /></p>
+<ul>
+<li>
+<p>第二步可以有以下两种情况：</p>
+</li>
+<li>
+<p><strong>merge合并</strong>：三方合并，将微信登陆2、QQ登录2及共同父节点登录，进行一个三分合并。</p>
+</li>
+</ul>
+<p><img alt="branch3" src="https://raw.githubusercontent.com/Curtails/learninggit/master/image/branch3.png" /></p>
+<ul>
+<li><strong>rebase（变基）</strong>：将微博登录2和登录合并成一个新的提交，在QQ登录2后面应用。</li>
+</ul>
+<p><img alt="branch4" src="https://raw.githubusercontent.com/Curtails/learninggit/master/image/branch4.png" /></p>
+<h3 id="git">.git目录中有什么？</h3>
+<ul>
+<li>HEAD：描述当前分支HEAD的位置</li>
+<li>index</li>
+<li>objects：存放文件全量历史数据</li>
+<li>objects中的文件夹名与文件夹中的文件名拼凑起来就是用git add文件的SHA1</li>
+</ul>
+<h2 id="git_1">Git常用命令</h2>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">init</span>                    <span class="c1">//初始化项目</span>
+<span class="n">git</span> <span class="n">add</span> <span class="n">hello</span><span class="p">.</span><span class="n">txt</span>           <span class="c1">//文件从代码区放到暂存区</span>
+<span class="n">git</span> <span class="n">reset</span> <span class="n">HEAD</span> <span class="o">--</span> <span class="n">hello</span><span class="p">.</span><span class="n">txt</span> <span class="c1">//文件从暂存区移出</span>
+<span class="n">git</span> <span class="n">cat</span><span class="o">-</span><span class="n">file</span> <span class="o">-</span><span class="n">p</span> <span class="n">SHA1</span>        <span class="c1">//查看文件内容</span>
+<span class="n">git</span> <span class="n">ls</span><span class="o">-</span><span class="n">files</span> <span class="o">--</span><span class="n">stage</span>        <span class="c1">//查看暂存区index内容</span>
+<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="err">&#39;</span><span class="n">message</span><span class="err">&#39;</span>     <span class="c1">//将暂存区数据提交到仓库，附带信息</span>
+<span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">user</span><span class="p">.</span><span class="n">name</span> <span class="s">&quot;Your Name&quot;</span>           <span class="c1">//设置名字及email地址</span>
+<span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">user</span><span class="p">.</span><span class="n">email</span> <span class="s">&quot;email@example.com&quot;</span>  
+<span class="n">git</span> <span class="n">status</span>                  <span class="c1">//查看暂存区内容</span>
+<span class="n">git</span> <span class="n">diff</span> <span class="n">filename</span>           <span class="c1">//查看文件修改</span>
+<span class="n">git</span> <span class="n">branch</span> <span class="n">name</span>             <span class="c1">//创建分支</span>
+<span class="n">git</span> <span class="n">checkout</span> <span class="n">branch</span>         <span class="c1">//切换分支</span>
+<span class="n">git</span> <span class="n">merge</span> <span class="n">branch</span>            <span class="c1">//合并分支</span>
+<span class="n">git</span> <span class="n">merge</span> <span class="o">--</span><span class="n">abort</span>           <span class="c1">//恢复merge之前状态</span>
+<span class="n">git</span> <span class="n">log</span>                     <span class="c1">//查看日志</span>
+<span class="n">git</span> <span class="n">checkout</span> <span class="n">SHA1</span>           <span class="c1">//回溯到SHA1值对应文件</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">repo</span>              <span class="c1">//从服务器端拷贝一个项目</span>
+<span class="n">git</span> <span class="n">remote</span>                  <span class="c1">//查看到所有关联到当前仓库的远程仓库</span>
+<span class="n">git</span> <span class="n">remote</span> <span class="n">show</span> <span class="n">name</span>        <span class="c1">//查看远程仓库详细信息</span>
+<span class="n">git</span> <span class="n">remote</span> <span class="n">add</span> <span class="n">name</span> <span class="n">url</span>     <span class="c1">//关联本地仓库和远程仓库name为别名 url为远程仓库地址</span>
+<span class="n">git</span> <span class="n">push</span> <span class="n">name</span> <span class="n">branch</span>        <span class="c1">//推送代码到远程仓库</span>
+<span class="n">git</span> <span class="n">pull</span> <span class="n">name</span> <span class="n">branch</span>        <span class="c1">//从远程仓库拉取代码</span>
+<span class="n">git</span> <span class="n">remote</span> <span class="n">remove</span> <span class="n">nanme</span>     <span class="c1">//删除远程仓库</span>
+<span class="n">git</span> <span class="n">stash</span>                   <span class="c1">//将当前进行中的工作保存到一个暂存区域然后将当前目录回滚到上一次提交</span>
+<span class="n">git</span> <span class="n">stash</span> <span class="n">apply</span>             <span class="c1">//回滚git stash保存的工作</span>
+<span class="n">git</span> <span class="n">stash</span> <span class="n">list</span>              <span class="c1">//列出暂存区域保存的进行中的工作</span>
+</pre></div>
+
+
+<h2 id="_5">附录</h2>
+<p><a href="https://www.cnblogs.com/xiangxinhouse/p/8254120.html">fatal: refusing to merge unrelated histories</a></p>
+<p><a href="https://www.jianshu.com/p/ca1f257fdf59">Git远程同步Github代码 SSH Key是必须的吗</a></p>
+<p><a href="https://blog.csdn.net/u011859677/article/details/79249436">配置SSH</a></p>
+<p><a href="https://blog.csdn.net/zhangkui0418/article/details/82977519">Updates were rejected because the tip of your current branch is behind</a></p>
+<p><a href="https://blog.csdn.net/weixin_38317875/article/details/80925750">用SSH与GIthub建立联系</a></p>
+<p><a href="https://blog.csdn.net/starry_night9280/article/details/53207928">Git warning：LF will be replaced by CRLF</a></p>
+</div>
+<div id="content-footer">Created in <span class="create-date date"> 2019-07-21 01:01 </span></div>
+
+</div>
+<div id="footer">
+            <span>
+                Copyright © 2019 Curtails.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Fork me in <a href="" target="_blank"> github </a>.
+            </span>
+</div>
+
+
+<!--百度统计-->
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+</body>
+</html>
