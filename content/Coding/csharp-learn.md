@@ -1,4 +1,5 @@
 ---
+layout: page
 title: "C#学习"
 data: 2019-11-17 22:30
 ---
