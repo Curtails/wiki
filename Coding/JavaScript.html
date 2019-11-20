@@ -5,7 +5,7 @@
     <link rel="Stylesheet" type="text/css" href="/wiki/static/css/tango.css">
     <link rel="shortcut icon" href="/wiki/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/wiki/favicon.ico" type="image/x-icon">
-    <title>javascript学习 - Curtails's personal knowledge wiki</title>
+    <title>JavaScript学习 - Curtails's personal knowledge wiki</title>
     <meta name="keywords" content="Technology, CTF, Network Security"/>
     <meta name="description" content="A wiki website of Curtails when I learned new knowledgy."/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -35,14 +35,73 @@
 <div id="container">
     
 <div id="header">
-  <div id="post-nav"><a href="/wiki/">Home</a>&nbsp;»&nbsp;<a href="/wiki/#Coding">Coding</a>&nbsp;»&nbsp;javascript学习</div>
+  <div id="post-nav"><a href="/wiki/">Home</a>&nbsp;»&nbsp;<a href="/wiki/#Coding">Coding</a>&nbsp;»&nbsp;JavaScript学习</div>
 </div>
 <div class="clearfix"></div>
-<div id="title">javascript学习</div>
+<div id="title">JavaScript学习</div>
 <div id="content">
-  <p><a href="https://www.runoob.com/js/js-tutorial.html">菜鸟教程 js</a></p>
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#javascript">JavaScript简介</a><ul>
+<li><a href="#html">直接写入HTML输出流</a></li>
+<li><a href="#_1">对事件反应</a></li>
+<li><a href="#html_1">改变HTML内容</a></li>
+<li><a href="#html_2">改变HTML图像</a></li>
+<li><a href="#html_3">改变HTML样式</a></li>
+<li><a href="#_2">验证输入</a></li>
+</ul>
+</li>
+<li><a href="#javascript_1">JavaScript用法</a><ul>
+<li><a href="#_3"><head></a></li>
+<li><a href="#_4"><body></a></li>
+<li><a href="#_5">外部引用</a></li>
+</ul>
+</li>
+<li><a href="#javascript_2">JavaScript输出</a><ul>
+<li><a href="#windowsalert">windows.alert()</a></li>
+<li><a href="#html_4">操作HTML元素</a></li>
+<li><a href="#html_5">写到 HTML 文档</a></li>
+<li><a href="#_6">写到控制台</a></li>
+</ul>
+</li>
+<li><a href="#javascript_3">JavaScript语法</a><ul>
+<li><a href="#javascript_4">JavaScript字面量</a></li>
+<li><a href="#javascript_5">JavaScript变量</a></li>
+<li><a href="#javascript_6">JavaScript细节</a></li>
+</ul>
+</li>
+<li><a href="#javascript_7">JavaScript数据类型</a><ul>
+<li><a href="#javascript_8">JavaScript 拥有动态类型</a></li>
+<li><a href="#_7">字符串</a></li>
+<li><a href="#_8">数字</a></li>
+<li><a href="#_9">布尔</a></li>
+<li><a href="#_10">数组</a></li>
+<li><a href="#_11">对象</a></li>
+<li><a href="#undefined-null">Undefined 和 Null</a></li>
+<li><a href="#_12">声明变量</a></li>
+<li><a href="#_13">判断数据类型格式</a></li>
+<li><a href="#_14">数据类型的内存分配</a><ul>
+<li><a href="#_15">基本类型存放到栈</a></li>
+<li><a href="#_16">引用类型存放到堆</a></li>
+</ul>
+</li>
+<li><a href="#_17">数据类型的简单转换</a></li>
+<li><a href="#-tostring">- 利用toString把数值转换成字符串</a></li>
+</ul>
+</li>
+<li><a href="#javascript_9">JavaScript对象</a><ul>
+<li><a href="#_18">对象定义</a></li>
+<li><a href="#_19">对象属性</a></li>
+<li><a href="#_20">对象方法</a></li>
+<li><a href="#_21">一些细节</a></li>
+</ul>
+</li>
+<li><a href="#javascript_10">JavaScript函数</a></li>
+</ul>
+</div>
 <h1 id="javascript">JavaScript简介</h1>
-<p>它能干什么？</p>
+<p><a href="https://www.runoob.com/js/js-tutorial.html">菜鸟教程 js</a><br />
+它能干什么？ <br />
+<a href="https://www.w3school.com.cn/js/index.asp">W3school js</a></p>
 <h2 id="html">直接写入HTML输出流</h2>
 <div class="hlcode"><pre><span class="nt">&lt;script&gt;</span>
 <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">&quot;&lt;h1&gt;这是一个标题&lt;/h1&gt;&quot;</span><span class="p">);</span>
@@ -179,6 +238,273 @@ src.match("bulbon")意思为查找src是否包含"bulbon"字符串  </p>
 <span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/html&gt;</span>
 </pre></div>
+
+
+<h1 id="javascript_2">JavaScript输出</h1>
+<p><strong>四种</strong>方式输出数据  </p>
+<h2 id="windowsalert">windows.alert()</h2>
+<p>windows.alert()同alert()</p>
+<div class="hlcode"><pre><span class="nt">&lt;script&gt;</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">alert</span><span class="p">(</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">6</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+
+<h2 id="html_4">操作HTML元素</h2>
+<p>使用document.getElementById(id)访问某个元素</p>
+<div class="hlcode"><pre><span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;h1&gt;</span>我的第一个 Web 页面<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p</span> <span class="na">id=</span><span class="s">&quot;demo&quot;</span><span class="nt">&gt;</span>我的第一个段落。<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;demo&quot;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="o">=</span><span class="s2">&quot;段落已修改。&quot;</span><span class="p">;</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</pre></div>
+
+
+<h2 id="html_5">写到 HTML 文档</h2>
+<p>使用document.write()向文档输出内容</p>
+<div class="hlcode"><pre><span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;h1&gt;</span>我的第一个 Web 页面<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p&gt;</span>我的第一个段落。<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nb">Date</span><span class="p">());</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</pre></div>
+
+
+<p>每次调用document.write()之前会调用open() 写完之后该函数会关闭  当再次调用该函数时就会刷新页面</p>
+<h2 id="_6">写到控制台</h2>
+<p>使用console.log()在浏览器控制台显示内容</p>
+<div class="hlcode"><pre><span class="nt">&lt;script&gt;</span>
+    <span class="nx">a</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="nx">b</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+    <span class="nx">c</span> <span class="o">=</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">c</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+
+<p>打开控制台查看11</p>
+<h1 id="javascript_3">JavaScript语法</h1>
+<h2 id="javascript_4">JavaScript字面量</h2>
+<p>字面量是值  </p>
+<ul>
+<li>数字</li>
+<li>字符串</li>
+<li>表达式</li>
+<li>数组</li>
+<li>对象</li>
+<li>函数</li>
+</ul>
+<h2 id="javascript_5">JavaScript变量</h2>
+<p>var定义变量</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">x</span><span class="p">,</span><span class="nx">length</span><span class="p">;</span>
+<span class="nx">length</span> <span class="o">=</span> <span class="mi">666</span><span class="p">;</span>
+</pre></div>
+
+
+<h2 id="javascript_6">JavaScript细节</h2>
+<ul>
+<li>字母大小写敏感</li>
+<li>JavaScript 使用 Unicode 字符集</li>
+</ul>
+<h1 id="javascript_7">JavaScript数据类型</h1>
+<ul>
+<li>值类型(基本类型)：字符串（String）、数字(Number)、布尔(Boolean)、对空（Null）、未定义（Undefined）、Symbol。  </li>
+<li>引用数据类型：对象(Object)、数组(Array)、函数(Function)。</li>
+</ul>
+<h2 id="javascript_8">JavaScript 拥有动态类型</h2>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">x</span><span class="p">;</span>               <span class="c1">// x 为 undefined</span>
+<span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>           <span class="c1">// 现在 x 为数字</span>
+<span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="s2">&quot;John&quot;</span><span class="p">;</span>      <span class="c1">// 现在 x 为字符串</span>
+</pre></div>
+
+
+<h2 id="_7">字符串</h2>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">answer</span><span class="o">=</span><span class="s2">&quot;It&#39;s alright&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">answer</span><span class="o">=</span><span class="s2">&quot;He is called &#39;Johnny&#39;&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">answer</span><span class="o">=</span><span class="s1">&#39;He is called &quot;Johnny&quot;&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<h2 id="_8">数字</h2>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">x1</span><span class="o">=</span><span class="mf">34.00</span><span class="p">;</span>      <span class="c1">//使用小数点来写</span>
+<span class="kd">var</span> <span class="nx">x2</span><span class="o">=</span><span class="mi">34</span><span class="p">;</span>         <span class="c1">//不使用小数点来写</span>
+<span class="kd">var</span> <span class="nx">y</span><span class="o">=</span><span class="mi">123</span><span class="nx">e5</span><span class="p">;</span>      <span class="c1">// 12300000</span>
+<span class="kd">var</span> <span class="nx">z</span><span class="o">=</span><span class="mi">123</span><span class="nx">e</span><span class="o">-</span><span class="mi">5</span><span class="p">;</span>     <span class="c1">// 0.00123</span>
+</pre></div>
+
+
+<h2 id="_9">布尔</h2>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">x</span><span class="o">=</span><span class="kc">true</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">y</span><span class="o">=</span><span class="kc">false</span><span class="p">;</span>
+</pre></div>
+
+
+<h2 id="_10">数组</h2>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">cars</span><span class="o">=</span><span class="k">new</span> <span class="nb">Array</span><span class="p">();</span>
+<span class="nx">cars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;Saab&quot;</span><span class="p">;</span>
+<span class="nx">cars</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;Volvo&quot;</span><span class="p">;</span>
+<span class="nx">cars</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;BMW&quot;</span><span class="p">;</span>
+<span class="c1">//或者condensed array</span>
+<span class="kd">var</span> <span class="nx">cars</span><span class="o">=</span><span class="k">new</span> <span class="nb">Array</span><span class="p">(</span><span class="s2">&quot;Saab&quot;</span><span class="p">,</span><span class="s2">&quot;Volvo&quot;</span><span class="p">,</span><span class="s2">&quot;BMW&quot;</span><span class="p">);</span>
+<span class="c1">//再或者</span>
+<span class="kd">var</span> <span class="nx">cars</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Saab&quot;</span><span class="p">,</span><span class="s2">&quot;Volvo&quot;</span><span class="p">,</span><span class="s2">&quot;BMW&quot;</span><span class="p">];</span>
+</pre></div>
+
+
+<h2 id="_11">对象</h2>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">person</span><span class="o">=</span><span class="p">{</span><span class="nx">firstname</span><span class="o">:</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="nx">lastname</span><span class="o">:</span><span class="s2">&quot;Doe&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="o">:</span><span class="mi">5566</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">person</span><span class="o">=</span><span class="p">{</span>
+<span class="nx">firstname</span> <span class="o">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span>
+<span class="nx">lastname</span>  <span class="o">:</span> <span class="s2">&quot;Doe&quot;</span><span class="p">,</span>
+<span class="nx">id</span>        <span class="o">:</span>  <span class="mi">5566</span>
+<span class="p">};</span>
+
+<span class="c1">//两种寻址方式</span>
+<span class="nx">name</span><span class="o">=</span><span class="nx">person</span><span class="p">.</span><span class="nx">lastname</span><span class="p">;</span>
+<span class="nx">name</span><span class="o">=</span><span class="nx">person</span><span class="p">[</span><span class="s2">&quot;lastname&quot;</span><span class="p">];</span>
+</pre></div>
+
+
+<h2 id="undefined-null">Undefined 和 Null</h2>
+<ul>
+<li>Undefined表示未定义</li>
+<li>Null表示值为空</li>
+</ul>
+<h2 id="_12">声明变量</h2>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">carname</span><span class="o">=</span><span class="k">new</span> <span class="nb">String</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">x</span><span class="o">=</span>      <span class="k">new</span> <span class="nb">Number</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">y</span><span class="o">=</span>      <span class="k">new</span> <span class="nb">Boolean</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">cars</span><span class="o">=</span>   <span class="k">new</span> <span class="nb">Array</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">person</span><span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">;</span>
+</pre></div>
+
+
+<p>声明变量要不直接赋值，要不就先new在赋值；函数也大致相同</p>
+<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">Demo</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">obj</span><span class="o">=</span><span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+    <span class="nx">obj</span><span class="p">.</span><span class="nx">name</span><span class="o">=</span><span class="s2">&quot;张思&quot;</span><span class="p">;</span>
+    <span class="nx">obj</span><span class="p">.</span><span class="nx">age</span><span class="o">=</span><span class="mi">12</span><span class="p">;</span>
+    <span class="nx">obj</span><span class="p">.</span><span class="nx">firstF</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="p">}</span>
+    <span class="nx">obj</span><span class="p">.</span><span class="nx">secondF</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">one</span><span class="o">=</span><span class="nx">Demo</span><span class="p">();</span>
+<span class="c1">// 调用输出</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">one</span><span class="p">.</span><span class="nx">age</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">one</span><span class="o">=</span><span class="k">new</span> <span class="nx">Demo</span><span class="p">;</span>
+<span class="c1">// 调用输出</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">one</span><span class="p">.</span><span class="nx">age</span><span class="p">);</span>
+</pre></div>
+
+
+<h2 id="_13">判断数据类型格式</h2>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">cars</span><span class="o">=</span><span class="k">new</span> <span class="nb">Array</span><span class="p">();</span>
+<span class="nx">cars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;Saab&quot;</span><span class="p">;</span>
+<span class="nx">cars</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;Volvo&quot;</span><span class="p">;</span>
+<span class="nx">cars</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;BMW&quot;</span><span class="p">;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">cars</span><span class="p">);</span> <span class="c1">// 数组和对象typeof都是object</span>
+</pre></div>
+
+
+<h2 id="_14">数据类型的内存分配</h2>
+<h3 id="_15">基本类型存放到栈</h3>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">;</span>
+<span class="nx">a</span> <span class="o">=</span> <span class="s2">&quot;zyj&quot;</span><span class="p">;</span>
+<span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>   <span class="c1">// zyj</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>   <span class="c1">// zyj</span>
+<span class="nx">a</span> <span class="o">=</span> <span class="s2">&quot;呵呵&quot;</span><span class="p">;</span>       <span class="c1">// 改变 a 的值，并不影响 b 的值</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>   <span class="c1">// 呵呵</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>   <span class="c1">// zyj</span>
+</pre></div>
+
+
+<h3 id="_16">引用类型存放到堆</h3>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span><span class="s2">&quot;percy&quot;</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">b</span><span class="p">;</span>
+<span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">;</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;zyj&quot;</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>    <span class="c1">// zyj</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">22</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">age</span><span class="p">);</span>     <span class="c1">// 22</span>
+<span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;zyj&quot;</span><span class="p">,</span>
+  <span class="nx">age</span><span class="o">:</span> <span class="mi">22</span>
+<span class="p">};</span>
+</pre></div>
+
+
+<h2 id="_17">数据类型的简单转换</h2>
+<h2 id="-tostring">- 利用toString把数值转换成字符串</h2>
+<div class="hlcode"><pre><span class="nt">&lt;script&gt;</span>
+    <span class="kd">var</span> <span class="nx">a</span><span class="o">=</span><span class="mi">100</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">c</span><span class="o">=</span><span class="nx">a</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">c</span><span class="p">));</span>      <span class="c1">//typeof()方法验证转换后的数据类型</span>
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+
+<ul>
+<li>使用 parseInt() 和 parseFloat() 方法可以把字符串转换为数值</li>
+</ul>
+<div class="hlcode"><pre><span class="nt">&lt;script&gt;</span>
+    <span class="kd">var</span> <span class="nx">str</span><span class="o">=</span><span class="s2">&quot;123.30&quot;</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">a</span><span class="o">=</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">str</span><span class="p">);</span>    
+    <span class="c1">//parseInt()方法把字符串转换为整数，parseFloat()方法把字符串转换为浮点数</span>
+    <span class="kd">var</span> <span class="nx">b</span><span class="o">=</span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">str</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+
+<h1 id="javascript_9">JavaScript对象</h1>
+<ul>
+<li>在JavaScript中 对象是变量的容器</li>
+<li>对象可包含变量和函数</li>
+</ul>
+<h2 id="_18">对象定义</h2>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span><span class="nx">firstName</span><span class="o">:</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="nx">lastName</span><span class="o">:</span><span class="s2">&quot;Doe&quot;</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span><span class="mi">50</span><span class="p">,</span> <span class="nx">eyeColor</span><span class="o">:</span><span class="s2">&quot;blue&quot;</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">firstName</span><span class="o">:</span><span class="s2">&quot;John&quot;</span><span class="p">,</span>
+    <span class="nx">lastName</span><span class="o">:</span><span class="s2">&quot;Doe&quot;</span><span class="p">,</span>
+    <span class="nx">age</span><span class="o">:</span><span class="mi">50</span><span class="p">,</span>
+    <span class="nx">eyeColor</span><span class="o">:</span><span class="s2">&quot;blue&quot;</span>
+<span class="p">};</span>
+<span class="c1">//前两者定义方式相同</span>
+<span class="c1">//另一种定义对象方式</span>
+<span class="kd">var</span> <span class="nx">person</span><span class="o">=</span><span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="o">=</span><span class="s1">&#39;小明&#39;</span><span class="err">；</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">sex</span><span class="o">=</span><span class="s1">&#39;男&#39;</span><span class="err">；</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">method</span><span class="o">=</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="o">+</span><span class="k">this</span><span class="p">.</span><span class="nx">sex</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h2 id="_19">对象属性</h2>
+<div class="hlcode"><pre><span class="nx">person</span><span class="p">[</span><span class="s2">&quot;firstName&quot;</span><span class="p">];</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">firstName</span><span class="p">;</span>
+</pre></div>
+
+
+<h2 id="_20">对象方法</h2>
+<div class="hlcode"><pre><span class="nx">name</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">fullName</span><span class="p">();</span><span class="c1">//访问了person对象的fullName方法</span>
+<span class="nx">name</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">fullName</span><span class="err">；</span> <span class="c1">//输出person对象的fullName函数字符串</span>
+</pre></div>
+
+
+<h2 id="_21">一些细节</h2>
+<ul>
+<li>对象由两个重复属性，以最后赋值的属性为准</li>
+<li>对象是键值对的容器，键必须为字符串，值可以为null和undefined以外的任意数据类型</li>
+</ul>
+<h1 id="javascript_10">JavaScript函数</h1>
 </div>
 <div id="content-footer"></div>
 
