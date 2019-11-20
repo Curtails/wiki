@@ -100,7 +100,7 @@ function myFunction()
 
 # JavaScript用法
 
-## <head>
+## head标签
 ```html
 <!DOCTYPE html>
 <html>
@@ -119,7 +119,7 @@ function myFunction()
 </body>
 </html>
 ```
-## <body>
+## body标签
 ```html
 <!DOCTYPE html>
 <html>
@@ -406,3 +406,126 @@ name = person.fullName； //输出person对象的fullName函数字符串
 - 对象是键值对的容器，键必须为字符串，值可以为null和undefined以外的任意数据类型
 
 # JavaScript函数
+没啥可写 放个示例
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>菜鸟教程(runoob.com)</title>
+</head>
+<body>
+    看书：
+    <input type="checkbox" name="checkbox" value=1>
+    <br>
+    写字：
+    <input type="checkbox" name="checkbox" value=2>
+    <br>
+    打飞机：
+    <input type="checkbox" name="checkbox" value=3>
+    <br>
+    玩游戏：
+    <input type="checkbox" name="checkbox" value=4>
+    <br>
+    <button onclick="allcheck()">全选/取消</button>
+    <script>
+    var checkAll = false;
+    function allcheck() {
+        let inputs = document.getElementsByName("checkbox");
+        var checkInt = 0;
+        for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].checked) {
+                checkInt += 1;
+            }
+        }
+        if (checkInt == inputs.length) {
+            checkAll = false;
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].checked = checkAll
+            }
+        } else {
+            checkAll = true;
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].checked = checkAll
+            }
+        }
+    }
+    </script>
+</body>
+</html>
+```
+
+## 向未声明的 JavaScript 变量分配值
+如果给一个尚未声明的变量赋值 该变量将自动作为windows的一个属性
+```js
+cname = "test";//将声明windows的一个属性cname
+```
+非严格模式下创建的未声明的全局变量 是**全局对象**的可配置属性可以删除
+```js
+var var1 = 1; // 不可配置全局属性
+var2 = 2; // 没有使用 var 声明，可配置全局属性
+
+console.log(this.var1); // 1
+console.log(window.var1); // 1
+
+delete var1; // false 无法删除
+console.log(var1); //1
+
+delete var2; 
+console.log(delete var2); // true
+console.log(var2); // 已经删除 报错变量未定义
+```
+
+# JavaScript作用域
+
+## 局部作用域
+```js
+// 此处不能调用 carName 变量
+function myFunction() {
+    var carName = "Volvo";
+    // 函数内可调用 carName 变量
+}
+```
+
+## 全局变量
+一般情况
+```js
+var carName = " Volvo";
+// 此处可调用 carName 变量
+function myFunction() {
+    // 函数内可调用 carName 变量
+}
+```
+未声明(var)的变量未全局变量
+```js
+// 此处可调用 carName 变量
+function myFunction() {
+    carName = "Volvo";
+    // 此处可调用 carName 变量
+}
+```
+## 关于let关键字
+let 声明的变量只在其声明的块或子块中可用
+区别如下：
+```js
+varTest();
+letTest();
+function varTest() {
+  var x = 1;
+  if (true) {
+    var x = 2;  // 同样的变量!
+    console.log(x);  // 2
+  }
+  console.log(x);  // 2
+}
+function letTest() {
+  let x = 1;
+  if (true) {
+    let x = 2;  // 不同的变量
+    console.log(x);  // 2
+  }
+  console.log(x);  // 1
+}
+```
+
+# JavaScript事件
