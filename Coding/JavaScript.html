@@ -87,24 +87,48 @@
 <li><a href="#_15">数据类型的简单转换</a></li>
 </ul>
 </li>
-<li><a href="#javascript_9">JavaScript对象</a><ul>
-<li><a href="#_16">对象定义</a></li>
-<li><a href="#_17">对象属性</a></li>
-<li><a href="#_18">对象方法</a></li>
-<li><a href="#_19">一些细节</a></li>
+<li><a href="#javascript_9">JavaScript字符串</a><ul>
+<li><a href="#_16">字符串</a></li>
+<li><a href="#_17">字符串长度</a></li>
+<li><a href="#_18">字符串可以是对象</a></li>
+<li><a href="#_19">字符串属性</a></li>
+<li><a href="#_20">字符串方法</a></li>
 </ul>
 </li>
-<li><a href="#javascript_10">JavaScript函数</a><ul>
-<li><a href="#javascript_11">向未声明的 JavaScript 变量分配值</a></li>
+<li><a href="#javascript_10">JavaScript对象</a><ul>
+<li><a href="#_21">对象定义</a></li>
+<li><a href="#_22">对象属性</a></li>
+<li><a href="#_23">对象方法</a></li>
+<li><a href="#_24">一些细节</a></li>
 </ul>
 </li>
-<li><a href="#javascript_12">JavaScript作用域</a><ul>
-<li><a href="#_20">局部作用域</a></li>
-<li><a href="#_21">全局变量</a></li>
+<li><a href="#javascript_11">JavaScript函数</a><ul>
+<li><a href="#javascript_12">向未声明的 JavaScript 变量分配值</a></li>
+</ul>
+</li>
+<li><a href="#javascript_13">JavaScript作用域</a><ul>
+<li><a href="#_25">局部作用域</a></li>
+<li><a href="#_26">全局变量</a></li>
 <li><a href="#let">关于let关键字</a></li>
 </ul>
 </li>
-<li><a href="#javascript_13">JavaScript事件</a></li>
+<li><a href="#javascript_14">JavaScript事件</a><ul>
+<li><a href="#html_6">HTML事件</a></li>
+<li><a href="#html_7">常见的HTML事件</a></li>
+<li><a href="#_27">一些细节</a></li>
+</ul>
+</li>
+<li><a href="#_28">运算符</a><ul>
+<li><a href="#_29">+运算符</a></li>
+<li><a href="#_30">对字符串和数字进行加法运算</a></li>
+</ul>
+</li>
+<li><a href="#javascript_15">JavaScript比较</a></li>
+<li><a href="#javascript_16">JavaScript循环语句</a><ul>
+<li><a href="#_31">循环</a></li>
+<li><a href="#continuebreak">continue和break</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <h1 id="javascript">JavaScript简介</h1>
@@ -473,12 +497,99 @@ src.match("bulbon")意思为查找src是否包含"bulbon"字符串  </p>
 </pre></div>
 
 
-<h1 id="javascript_9">JavaScript对象</h1>
+<h1 id="javascript_9">JavaScript字符串</h1>
+<h2 id="_16">字符串</h2>
+<div class="hlcode"><pre><span class="c1">//基本操作</span>
+<span class="kd">var</span> <span class="nx">carname</span> <span class="o">=</span> <span class="s2">&quot;Volvo XC60&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">carname</span> <span class="o">=</span> <span class="s1">&#39;Volvo XC60&#39;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">character</span> <span class="o">=</span> <span class="nx">carname</span><span class="p">[</span><span class="mi">7</span><span class="p">];</span>
+<span class="c1">//字符串包含单/双引号</span>
+<span class="kd">var</span> <span class="nx">answer</span> <span class="o">=</span> <span class="s2">&quot;It&#39;s alright&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">answer</span> <span class="o">=</span> <span class="s2">&quot;He is called &#39;Johnny&#39;&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">answer</span> <span class="o">=</span> <span class="s1">&#39;He is called &quot;Johnny&quot;&#39;</span><span class="p">;</span>
+<span class="c1">//添加转义符号使用单/双引号</span>
+<span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="s1">&#39;It\&#39;s alright&#39;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="s2">&quot;He is called \&quot;Johnny\&quot;&quot;</span><span class="p">;</span>
+</pre></div>
+
+
+<h2 id="_17">字符串长度</h2>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">txt</span> <span class="o">=</span> <span class="s2">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">sln</span> <span class="o">=</span> <span class="nx">txt</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+</pre></div>
+
+
+<h2 id="_18">字符串可以是对象</h2>
+<p>使用 new 关键字将字符串定义为一个对象：var firstName = new String("John")</p>
+<div class="hlcode"><pre><span class="o">&lt;</span><span class="nx">p</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;demo&quot;</span><span class="o">&gt;&lt;</span><span class="err">/p&gt;</span>
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="s2">&quot;John&quot;</span><span class="p">;</span>              <span class="c1">// x是一个字符串</span>
+<span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">String</span><span class="p">(</span><span class="s2">&quot;John&quot;</span><span class="p">);</span>  <span class="c1">// y是一个对象</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;demo&quot;</span><span class="p">).</span><span class="nx">innerHTML</span> <span class="o">=</span><span class="k">typeof</span> <span class="nx">x</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="k">typeof</span> <span class="nx">y</span><span class="p">;</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+</pre></div>
+
+
+<p>建议不要创建String对象 当不同字符串进行强类型比较时会返回false</p>
+<h2 id="_19">字符串属性</h2>
+<div class="hlcode"><pre><span class="n">constructor</span>     <span class="err">返回创建字符串属性的函数</span>
+<span class="n">length</span>          <span class="err">返回字符串的长度</span>
+<span class="n">prototype</span>       <span class="err">允许您向对象添加属性和方法</span>
+</pre></div>
+
+
+<h2 id="_20">字符串方法</h2>
+<p>更多 <a href="https://www.runoob.com/jsref/jsref-obj-string.html">方法实例</a></p>
+<div class="hlcode"><pre><span class="n">charAt</span><span class="p">()</span>        <span class="err">返回指定索引位置的字符</span>
+<span class="n">charCodeAt</span><span class="p">()</span>    <span class="err">返回指定索引位置字符的</span> <span class="n">Unicode</span> <span class="err">值</span>
+<span class="n">concat</span><span class="p">()</span>        <span class="err">连接两个或多个字符串，返回连接后的字符串</span>
+<span class="n">fromCharCode</span><span class="p">()</span>  <span class="err">将</span> <span class="n">Unicode</span> <span class="err">转换为字符串</span>
+<span class="n">indexOf</span><span class="p">()</span>       <span class="err">返回字符串中检索指定字符第一次出现的位置</span>
+<span class="n">lastIndexOf</span><span class="p">()</span>   <span class="err">返回字符串中检索指定字符最后一次出现的位置</span>
+<span class="n">localeCompare</span><span class="p">()</span> <span class="err">用本地特定的顺序来比较两个字符串</span>
+<span class="n">match</span><span class="p">()</span>         <span class="err">找到一个或多个正则表达式的匹配</span>
+<span class="n">replace</span><span class="p">()</span>       <span class="err">替换与正则表达式匹配的子串</span>
+<span class="n">search</span><span class="p">()</span>        <span class="err">检索与正则表达式相匹配的值</span>
+<span class="n">slice</span><span class="p">()</span>         <span class="err">提取字符串的片断，并在新的字符串中返回被提取的部分</span>
+<span class="n">split</span><span class="p">()</span>         <span class="err">把字符串分割为子字符串数组</span>
+<span class="n">substr</span><span class="p">()</span>        <span class="err">从起始索引号提取字符串中指定数目的字符</span>
+<span class="n">substring</span><span class="p">()</span>     <span class="err">提取字符串中两个指定的索引号之间的字符</span>
+<span class="n">toLocaleLowerCase</span><span class="p">()</span> <span class="err">根据主机的语言环境把字符串转换为小写，只有几种语言（如土耳其语）具有地方特有的大小写映射</span>
+<span class="n">toLocaleUpperCase</span><span class="p">()</span> <span class="err">根据主机的语言环境把字符串转换为大写，只有几种语言（如土耳其语）具有地方特有的大小写映射</span>
+<span class="n">toLowerCase</span><span class="p">()</span>   <span class="err">把字符串转换为小写</span>
+<span class="n">toString</span><span class="p">()</span>      <span class="err">返回字符串对象值</span>
+<span class="n">toUpperCase</span><span class="p">()</span>   <span class="err">把字符串转换为大写</span>
+<span class="n">trim</span><span class="p">()</span>          <span class="err">移除字符串首尾空白</span>
+<span class="n">valueOf</span><span class="p">()</span>       <span class="err">返回某个字符串对象的原始值</span>
+</pre></div>
+
+
+<p>方法使用例子：</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="s2">&quot;JohnJohn&quot;</span><span class="p">;</span>  <span class="c1">// x 是字符串</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>    <span class="c1">// h</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">// 104</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">y</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span> <span class="c1">// JohnJohn104104, x+y+y</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">);</span> <span class="c1">// 2, 索引从0开始</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">lastIndexOf</span><span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">);</span> <span class="c1">// 6</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">slice</span><span class="p">();</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;o&#39;</span><span class="p">);</span> <span class="c1">//J,hnJ,hn</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">substr</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> <span class="c1">// hnJohn</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span> <span class="c1">// hn，[2,3]</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">toLocaleLowerCase</span><span class="p">();</span> <span class="c1">// johnjohn,小写</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">toLocaleUpperCase</span><span class="p">();</span> <span class="c1">// JOHNJOHN,大写</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span> <span class="c1">// 转成Stirng</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">();</span> <span class="c1">// JOHNJOHN,大写</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">trim</span><span class="p">();</span> <span class="c1">// JohnJohn,去除两端的空格</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">valueOf</span><span class="p">();</span> <span class="c1">// 返回某个字符串对象的原始值</span>
+</pre></div>
+
+
+<h1 id="javascript_10">JavaScript对象</h1>
 <ul>
 <li>在JavaScript中 对象是变量的容器</li>
 <li>对象可包含变量和函数</li>
 </ul>
-<h2 id="_16">对象定义</h2>
+<h2 id="_21">对象定义</h2>
 <div class="hlcode"><pre><span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span><span class="nx">firstName</span><span class="o">:</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="nx">lastName</span><span class="o">:</span><span class="s2">&quot;Doe&quot;</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span><span class="mi">50</span><span class="p">,</span> <span class="nx">eyeColor</span><span class="o">:</span><span class="s2">&quot;blue&quot;</span><span class="p">};</span>
 <span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nx">firstName</span><span class="o">:</span><span class="s2">&quot;John&quot;</span><span class="p">,</span>
@@ -497,24 +608,24 @@ src.match("bulbon")意思为查找src是否包含"bulbon"字符串  </p>
 </pre></div>
 
 
-<h2 id="_17">对象属性</h2>
+<h2 id="_22">对象属性</h2>
 <div class="hlcode"><pre><span class="nx">person</span><span class="p">[</span><span class="s2">&quot;firstName&quot;</span><span class="p">];</span>
 <span class="nx">person</span><span class="p">.</span><span class="nx">firstName</span><span class="p">;</span>
 </pre></div>
 
 
-<h2 id="_18">对象方法</h2>
+<h2 id="_23">对象方法</h2>
 <div class="hlcode"><pre><span class="nx">name</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">fullName</span><span class="p">();</span><span class="c1">//访问了person对象的fullName方法</span>
 <span class="nx">name</span> <span class="o">=</span> <span class="nx">person</span><span class="p">.</span><span class="nx">fullName</span><span class="err">；</span> <span class="c1">//输出person对象的fullName函数字符串</span>
 </pre></div>
 
 
-<h2 id="_19">一些细节</h2>
+<h2 id="_24">一些细节</h2>
 <ul>
 <li>对象由两个重复属性，以最后赋值的属性为准</li>
 <li>对象是键值对的容器，键必须为字符串，值可以为null和undefined以外的任意数据类型</li>
 </ul>
-<h1 id="javascript_10">JavaScript函数</h1>
+<h1 id="javascript_11">JavaScript函数</h1>
 <p>没啥可写 放个示例</p>
 <div class="hlcode"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html&gt;</span>
@@ -564,7 +675,7 @@ src.match("bulbon")意思为查找src是否包含"bulbon"字符串  </p>
 </pre></div>
 
 
-<h2 id="javascript_11">向未声明的 JavaScript 变量分配值</h2>
+<h2 id="javascript_12">向未声明的 JavaScript 变量分配值</h2>
 <p>如果给一个尚未声明的变量赋值 该变量将自动作为windows的一个属性</p>
 <div class="hlcode"><pre><span class="nx">cname</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span><span class="p">;</span><span class="c1">//将声明windows的一个属性cname</span>
 </pre></div>
@@ -586,8 +697,8 @@ src.match("bulbon")意思为查找src是否包含"bulbon"字符串  </p>
 </pre></div>
 
 
-<h1 id="javascript_12">JavaScript作用域</h1>
-<h2 id="_20">局部作用域</h2>
+<h1 id="javascript_13">JavaScript作用域</h1>
+<h2 id="_25">局部作用域</h2>
 <div class="hlcode"><pre><span class="c1">// 此处不能调用 carName 变量</span>
 <span class="kd">function</span> <span class="nx">myFunction</span><span class="p">()</span> <span class="p">{</span>
     <span class="kd">var</span> <span class="nx">carName</span> <span class="o">=</span> <span class="s2">&quot;Volvo&quot;</span><span class="p">;</span>
@@ -596,7 +707,7 @@ src.match("bulbon")意思为查找src是否包含"bulbon"字符串  </p>
 </pre></div>
 
 
-<h2 id="_21">全局变量</h2>
+<h2 id="_26">全局变量</h2>
 <p>一般情况</p>
 <div class="hlcode"><pre><span class="kd">var</span> <span class="nx">carName</span> <span class="o">=</span> <span class="s2">&quot; Volvo&quot;</span><span class="p">;</span>
 <span class="c1">// 此处可调用 carName 变量</span>
@@ -639,7 +750,131 @@ src.match("bulbon")意思为查找src是否包含"bulbon"字符串  </p>
 </pre></div>
 
 
-<h1 id="javascript_13">JavaScript事件</h1>
+<h1 id="javascript_14">JavaScript事件</h1>
+<h2 id="html_6">HTML事件</h2>
+<p>HTML事件实例</p>
+<ul>
+<li>HTML 页面完成加载</li>
+<li>HTML input 字段改变时</li>
+<li>HTML 按钮被点击</li>
+</ul>
+<div class="hlcode"><pre><span class="c1">//修改其他元素内容</span>
+<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">&quot;getElementById(&#39;demo&#39;).innerHTML=Date()&quot;</span><span class="o">&gt;</span><span class="err">现在的时间是</span><span class="o">?&lt;</span><span class="err">/button&gt;</span>
+<span class="o">&lt;</span><span class="nx">p</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;demo&quot;</span><span class="o">&gt;&lt;</span><span class="err">/p&gt;</span>
+<span class="o">&lt;</span><span class="err">/body&gt;</span>
+<span class="c1">//修改自身内容</span>
+<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">&quot;this.innerHTML=Date()&quot;</span><span class="o">&gt;</span><span class="err">现在的时间是</span><span class="o">?&lt;</span><span class="err">/button&gt;</span>
+<span class="o">&lt;</span><span class="err">/body&gt;</span>
+<span class="c1">//调用其他函数</span>
+<span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">&quot;displayDate()&quot;</span><span class="o">&gt;</span><span class="err">点这里</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="kd">function</span> <span class="nx">displayDate</span><span class="p">(){</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;demo&quot;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="o">=</span><span class="nb">Date</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+<span class="o">&lt;</span><span class="nx">p</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;demo&quot;</span><span class="o">&gt;&lt;</span><span class="err">/p&gt;</span>
+<span class="o">&lt;</span><span class="err">/body&gt;</span>
+</pre></div>
+
+
+<h2 id="html_7">常见的HTML事件</h2>
+<div class="hlcode"><pre><span class="n">onchange</span>        <span class="n">HTML</span> <span class="err">元素改变</span>
+<span class="n">onclick</span>         <span class="err">用户点击</span> <span class="n">HTML</span> <span class="err">元素</span>
+<span class="n">onmouseover</span>     <span class="err">用户在一个</span><span class="n">HTML</span><span class="err">元素上移动鼠标</span>
+<span class="n">onmouseout</span>      <span class="err">用户从一个</span><span class="n">HTML</span><span class="err">元素上移开鼠标</span>
+<span class="n">onkeydown</span>       <span class="err">用户按下键盘按键</span>
+<span class="n">onload</span>          <span class="err">浏览器已完成页面的加载</span>
+</pre></div>
+
+
+<p>更多事件参考 <a href="https://www.runoob.com/jsref/dom-obj-event.html">HTML DOM 事件</a></p>
+<h2 id="_27">一些细节</h2>
+<p>不推荐使用HTML元素中可以<strong>添加事件属性</strong>的方式来添加属性 例如：</p>
+<div class="hlcode"><pre><span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onclick</span><span class="o">=</span><span class="s2">&quot;getElementById(&#39;demo&#39;).innerHTML=Date()&quot;</span><span class="o">&gt;</span><span class="err">现在的时间是</span><span class="o">?&lt;</span><span class="err">/button&gt;</span>
+</pre></div>
+
+
+<p>可以采用添加<strong>事件句柄</strong>的形式</p>
+<div class="hlcode"><pre><span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;test&quot;</span><span class="nt">&gt;</span>现在的时间是?<span class="nt">&lt;/button&gt;</span>
+<span class="nt">&lt;script&gt;</span>
+<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">test</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">);</span>   
+    <span class="nx">test</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="nx">myfun1</span><span class="p">);</span>
+    <span class="nx">test</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span><span class="nx">myfun3</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">myfun1</span><span class="p">(){</span>  
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;你好1&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">myfun3</span><span class="p">(){</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nb">Date</span><span class="p">());</span> 
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</pre></div>
+
+
+<p>编程原则要遵从<strong>高内聚 低耦合</strong> 或者一个形象比拟：<strong>严于律己，宽以待人</strong></p>
+<h1 id="_28">运算符</h1>
+<h2 id="_29">+运算符</h2>
+<div class="hlcode"><pre><span class="nx">txt1</span><span class="o">=</span><span class="s2">&quot;What a very&quot;</span><span class="p">;</span>
+<span class="nx">txt2</span><span class="o">=</span><span class="s2">&quot;nice day&quot;</span><span class="p">;</span>
+<span class="nx">txt3</span><span class="o">=</span><span class="nx">txt1</span><span class="o">+</span><span class="nx">txt2</span><span class="p">;</span>
+</pre></div>
+
+
+<h2 id="_30">对字符串和数字进行加法运算</h2>
+<p>字符串和数字，数字转换为字符串</p>
+<h1 id="javascript_15">JavaScript比较</h1>
+<ul>
+<li>弱比较</li>
+<li>强比较</li>
+<li>逻辑运算符</li>
+<li>条件运算符</li>
+</ul>
+<h1 id="javascript_16">JavaScript循环语句</h1>
+<h2 id="_31">循环</h2>
+<p>for-in循环</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">person</span><span class="o">=</span><span class="p">{</span><span class="nx">fname</span><span class="o">:</span><span class="s2">&quot;Bill&quot;</span><span class="p">,</span><span class="nx">lname</span><span class="o">:</span><span class="s2">&quot;Gates&quot;</span><span class="p">,</span><span class="nx">age</span><span class="o">:</span><span class="mi">56</span><span class="p">};</span> 
+<span class="k">for</span> <span class="p">(</span><span class="nx">x</span> <span class="k">in</span> <span class="nx">person</span><span class="p">){</span>
+    <span class="nx">txt</span><span class="o">=</span><span class="nx">txt</span> <span class="o">+</span> <span class="nx">person</span><span class="p">[</span><span class="nx">x</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>一些有特点的循环形式</p>
+<div class="hlcode"><pre><span class="nx">cars</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;BMW&quot;</span><span class="p">,</span><span class="s2">&quot;Volvo&quot;</span><span class="p">,</span><span class="s2">&quot;Saab&quot;</span><span class="p">,</span><span class="s2">&quot;Ford&quot;</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(;</span><span class="nx">cars</span><span class="p">[</span><span class="nx">i</span><span class="p">];){</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">cars</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">);</span>
+    <span class="nx">i</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">cars</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;BMW&quot;</span><span class="p">,</span><span class="s2">&quot;Volvo&quot;</span><span class="p">,</span><span class="s2">&quot;Saab&quot;</span><span class="p">,</span><span class="s2">&quot;Ford&quot;</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span><span class="nx">cars</span><span class="p">[</span><span class="nx">i</span><span class="p">]){</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">cars</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">);</span>
+    <span class="nx">i</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h2 id="continuebreak">continue和break</h2>
+<p>跳出代码块</p>
+<div class="hlcode"><pre><span class="nx">cars</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;BMW&quot;</span><span class="p">,</span><span class="s2">&quot;Volvo&quot;</span><span class="p">,</span><span class="s2">&quot;Saab&quot;</span><span class="p">,</span><span class="s2">&quot;Ford&quot;</span><span class="p">];</span>
+<span class="nx">list</span><span class="o">:</span><span class="p">{</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">cars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">);</span> 
+    <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">cars</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">);</span> 
+    <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">cars</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">);</span> 
+    <span class="k">break</span> <span class="nx">list</span><span class="p">;</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">cars</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">);</span> 
+    <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">cars</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">);</span> 
+    <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">cars</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">);</span> 
+<span class="p">}</span>
+</pre></div>
 </div>
 <div id="content-footer"></div>
 
