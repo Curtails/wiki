@@ -368,6 +368,92 @@ var c = {
 </script>
 ```
 
+# JavaScript字符串
+## 字符串
+```js
+//基本操作
+var carname = "Volvo XC60";
+var carname = 'Volvo XC60';
+var character = carname[7];
+//字符串包含单/双引号
+var answer = "It's alright";
+var answer = "He is called 'Johnny'";
+var answer = 'He is called "Johnny"';
+//添加转义符号使用单/双引号
+var x = 'It\'s alright';
+var y = "He is called \"Johnny\"";
+```
+
+## 字符串长度
+```js
+var txt = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var sln = txt.length;
+```
+
+## 字符串可以是对象
+使用 new 关键字将字符串定义为一个对象：var firstName = new String("John")
+```js
+<p id="demo"></p>
+<script>
+var x = "John";              // x是一个字符串
+var y = new String("John");  // y是一个对象
+document.getElementById("demo").innerHTML =typeof x + " " + typeof y;
+</script>
+```
+建议不要创建String对象 当不同字符串进行强类型比较时会返回false
+
+## 字符串属性
+```
+constructor	    返回创建字符串属性的函数
+length	        返回字符串的长度
+prototype	    允许您向对象添加属性和方法
+```
+
+## 字符串方法
+更多 [方法实例](https://www.runoob.com/jsref/jsref-obj-string.html)
+```
+charAt()	    返回指定索引位置的字符
+charCodeAt()	返回指定索引位置字符的 Unicode 值
+concat()	    连接两个或多个字符串，返回连接后的字符串
+fromCharCode()	将 Unicode 转换为字符串
+indexOf()	    返回字符串中检索指定字符第一次出现的位置
+lastIndexOf()	返回字符串中检索指定字符最后一次出现的位置
+localeCompare()	用本地特定的顺序来比较两个字符串
+match()	        找到一个或多个正则表达式的匹配
+replace()	    替换与正则表达式匹配的子串
+search()	    检索与正则表达式相匹配的值
+slice()	        提取字符串的片断，并在新的字符串中返回被提取的部分
+split()	        把字符串分割为子字符串数组
+substr()	    从起始索引号提取字符串中指定数目的字符
+substring()	    提取字符串中两个指定的索引号之间的字符
+toLocaleLowerCase()	根据主机的语言环境把字符串转换为小写，只有几种语言（如土耳其语）具有地方特有的大小写映射
+toLocaleUpperCase()	根据主机的语言环境把字符串转换为大写，只有几种语言（如土耳其语）具有地方特有的大小写映射
+toLowerCase()	把字符串转换为小写
+toString()	    返回字符串对象值
+toUpperCase()	把字符串转换为大写
+trim()	        移除字符串首尾空白
+valueOf()	    返回某个字符串对象的原始值
+```
+方法使用例子：
+```js
+var x = "JohnJohn";  // x 是字符串
+y = x.charAt(2);    // h
+y = x.charCodeAt(2); // 104
+y = x.concat(y, y); // JohnJohn104104, x+y+y
+y = x.indexOf('h'); // 2, 索引从0开始
+y = x.lastIndexOf('h'); // 6
+y = x.slice();
+y = x.split('o'); //J,hnJ,hn
+y = x.substr(2); // hnJohn
+y = x.substring(2,4) // hn，[2,3]
+y = x.toLocaleLowerCase(); // johnjohn,小写
+y = x.toLocaleUpperCase(); // JOHNJOHN,大写
+y = x.toString(); // 转成Stirng
+y = x.toUpperCase(); // JOHNJOHN,大写
+y = x.trim(); // JohnJohn,去除两端的空格
+y = x.valueOf(); // 返回某个字符串对象的原始值
+```
+
 # JavaScript对象
 - 在JavaScript中 对象是变量的容器
 - 对象可包含变量和函数
@@ -529,3 +615,125 @@ function letTest() {
 ```
 
 # JavaScript事件
+## HTML事件
+HTML事件实例
+
+- HTML 页面完成加载
+- HTML input 字段改变时
+- HTML 按钮被点击
+
+```js
+//修改其他元素内容
+<body>
+<button onclick="getElementById('demo').innerHTML=Date()">现在的时间是?</button>
+<p id="demo"></p>
+</body>
+//修改自身内容
+<body>
+<button onclick="this.innerHTML=Date()">现在的时间是?</button>
+</body>
+//调用其他函数
+<body>
+<button onclick="displayDate()">点这里</button>
+<script>
+function displayDate(){
+	document.getElementById("demo").innerHTML=Date();
+}
+</script>
+<p id="demo"></p>
+</body>
+```
+
+## 常见的HTML事件
+```
+onchange	    HTML 元素改变
+onclick     	用户点击 HTML 元素
+onmouseover	    用户在一个HTML元素上移动鼠标
+onmouseout	    用户从一个HTML元素上移开鼠标
+onkeydown	    用户按下键盘按键
+onload	        浏览器已完成页面的加载
+```
+更多事件参考 [HTML DOM 事件](https://www.runoob.com/jsref/dom-obj-event.html)
+
+## 一些细节
+不推荐使用HTML元素中可以**添加事件属性**的方式来添加属性 例如：
+```js
+<button onclick="getElementById('demo').innerHTML=Date()">现在的时间是?</button>
+```
+可以采用添加**事件句柄**的形式
+```html
+<body>
+<button id="test">现在的时间是?</button>
+<script>
+window.onload = function(){
+    var test = document.getElementById("test");   
+    test.addEventListener("click",myfun1);
+	test.addEventListener("click",myfun3);
+}
+function myfun1(){  
+    alert("你好1");
+}
+function myfun3(){
+	document.write(Date());	
+}
+</script>
+</body>
+```
+编程原则要遵从**高内聚 低耦合** 或者一个形象比拟：**严于律己，宽以待人**
+
+# 运算符
+## +运算符
+```js
+txt1="What a very";
+txt2="nice day";
+txt3=txt1+txt2;
+```
+## 对字符串和数字进行加法运算
+字符串和数字，数字转换为字符串
+
+# JavaScript比较
+- 弱比较
+- 强比较
+- 逻辑运算符
+- 条件运算符
+
+# JavaScript循环语句
+## 循环
+for-in循环
+```js
+var person={fname:"Bill",lname:"Gates",age:56}; 
+for (x in person){
+	txt=txt + person[x];
+}
+```
+一些有特点的循环形式
+```js
+cars=["BMW","Volvo","Saab","Ford"];
+var i=0;
+for (;cars[i];){
+	document.write(cars[i] + "<br>");
+	i++;
+}
+
+cars=["BMW","Volvo","Saab","Ford"];
+var i=0;
+while (cars[i]){
+	document.write(cars[i] + "<br>");
+	i++;
+}
+```
+
+## continue和break
+跳出代码块
+```js
+cars=["BMW","Volvo","Saab","Ford"];
+list:{
+	document.write(cars[0] + "<br>"); 
+	document.write(cars[1] + "<br>"); 
+	document.write(cars[2] + "<br>"); 
+	break list;
+	document.write(cars[3] + "<br>"); 
+	document.write(cars[4] + "<br>"); 
+	document.write(cars[5] + "<br>"); 
+}
+```
