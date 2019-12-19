@@ -129,6 +129,12 @@
 <li><a href="#continuebreak">continue和break</a></li>
 </ul>
 </li>
+<li><a href="#javascript-typeof">JavaScript typeof</a></li>
+<li><a href="#javascript_17">JavaScript 类型转换</a><ul>
+<li><a href="#typeof">typeof 操作符</a></li>
+<li><a href="#constructor">constructor 属性</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <h1 id="javascript">JavaScript简介</h1>
@@ -874,6 +880,68 @@ src.match("bulbon")意思为查找src是否包含"bulbon"字符串  </p>
     <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">cars</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">);</span> 
     <span class="nb">document</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">cars</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;&lt;br&gt;&quot;</span><span class="p">);</span> 
 <span class="p">}</span>
+</pre></div>
+
+
+<h1 id="javascript-typeof">JavaScript typeof</h1>
+<p>typeof 操作符来检测变量的数据类型</p>
+<div class="hlcode"><pre><span class="k">typeof</span> <span class="s2">&quot;John&quot;</span>                <span class="c1">// 返回 string</span>
+<span class="k">typeof</span> <span class="mf">3.14</span>                  <span class="c1">// 返回 number</span>
+<span class="k">typeof</span> <span class="kc">false</span>                 <span class="c1">// 返回 boolean</span>
+<span class="k">typeof</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>             <span class="c1">// 返回 object</span>
+<span class="k">typeof</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span><span class="mi">34</span><span class="p">}</span> <span class="c1">// 返回 object</span>
+</pre></div>
+
+
+<div class="hlcode"><pre><span class="k">typeof</span> <span class="kc">undefined</span>             <span class="c1">// undefined</span>
+<span class="k">typeof</span> <span class="kc">null</span>                  <span class="c1">// object</span>
+<span class="kc">null</span> <span class="o">===</span> <span class="kc">undefined</span>           <span class="c1">// false</span>
+<span class="kc">null</span> <span class="o">==</span> <span class="kc">undefined</span>            <span class="c1">// true</span>
+</pre></div>
+
+
+<h1 id="javascript_17">JavaScript 类型转换</h1>
+<p>5种数据类型</p>
+<ul>
+<li>String</li>
+<li>number</li>
+<li>boolean</li>
+<li>object</li>
+<li>function</li>
+</ul>
+<p>三种对象类型</p>
+<ul>
+<li>Object</li>
+<li>Date</li>
+<li>Array</li>
+</ul>
+<p>不包含任何值的数据类型</p>
+<ul>
+<li>null</li>
+<li>undefined</li>
+</ul>
+<h2 id="typeof">typeof 操作符</h2>
+<div class="hlcode"><pre><span class="k">typeof</span> <span class="s2">&quot;John&quot;</span>                 <span class="c1">// 返回 string</span>
+<span class="k">typeof</span> <span class="mf">3.14</span>                   <span class="c1">// 返回 number</span>
+<span class="k">typeof</span> <span class="kc">NaN</span>                    <span class="c1">// 返回 number</span>
+<span class="k">typeof</span> <span class="kc">false</span>                  <span class="c1">// 返回 boolean</span>
+<span class="k">typeof</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>              <span class="c1">// 返回 object</span>
+<span class="k">typeof</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span><span class="mi">34</span><span class="p">}</span>  <span class="c1">// 返回 object</span>
+<span class="k">typeof</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()</span>             <span class="c1">// 返回 object</span>
+<span class="k">typeof</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{}</span>         <span class="c1">// 返回 function</span>
+<span class="k">typeof</span> <span class="nx">myCar</span>                  <span class="c1">// 返回 undefined (如果 myCar 没有声明)</span>
+<span class="k">typeof</span> <span class="kc">null</span>                   <span class="c1">// 返回 object</span>
+</pre></div>
+
+
+<h2 id="constructor">constructor 属性</h2>
+<div class="hlcode"><pre><span class="s2">&quot;John&quot;</span><span class="p">.</span><span class="nx">constructor</span>                 <span class="c1">// 返回函数 String()  { [native code] }</span>
+<span class="p">(</span><span class="mf">3.14</span><span class="p">).</span><span class="nx">constructor</span>                 <span class="c1">// 返回函数 Number()  { [native code] }</span>
+<span class="kc">false</span><span class="p">.</span><span class="nx">constructor</span>                  <span class="c1">// 返回函数 Boolean() { [native code] }</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">].</span><span class="nx">constructor</span>              <span class="c1">// 返回函数 Array()   { [native code] }</span>
+<span class="p">{</span><span class="nx">name</span><span class="o">:</span><span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span><span class="mi">34</span><span class="p">}.</span><span class="nx">constructor</span>  <span class="c1">// 返回函数 Object()  { [native code] }</span>
+<span class="k">new</span> <span class="nb">Date</span><span class="p">().</span><span class="nx">constructor</span>             <span class="c1">// 返回函数 Date()    { [native code] }</span>
+<span class="kd">function</span> <span class="p">()</span> <span class="p">{}.</span><span class="nx">constructor</span>         <span class="c1">// 返回函数 Function(){ [native code] }</span>
 </pre></div>
 </div>
 <div id="content-footer"></div>
