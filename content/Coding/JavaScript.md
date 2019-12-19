@@ -737,3 +737,65 @@ list:{
 	document.write(cars[5] + "<br>"); 
 }
 ```
+# JavaScript typeof
+ typeof 操作符来检测变量的数据类型
+```js
+typeof "John"                // 返回 string
+typeof 3.14                  // 返回 number
+typeof false                 // 返回 boolean
+typeof [1,2,3,4]             // 返回 object
+typeof {name:'John', age:34} // 返回 object
+```
+
+```js
+typeof undefined             // undefined
+typeof null                  // object
+null === undefined           // false
+null == undefined            // true
+```
+
+# JavaScript 类型转换
+5种数据类型
+
+- String
+- number
+- boolean
+- object
+- function
+
+三种对象类型
+
+- Object
+- Date
+- Array
+
+不包含任何值的数据类型
+
+- null
+- undefined
+
+## typeof 操作符
+```js
+typeof "John"                 // 返回 string
+typeof 3.14                   // 返回 number
+typeof NaN                    // 返回 number
+typeof false                  // 返回 boolean
+typeof [1,2,3,4]              // 返回 object
+typeof {name:'John', age:34}  // 返回 object
+typeof new Date()             // 返回 object
+typeof function () {}         // 返回 function
+typeof myCar                  // 返回 undefined (如果 myCar 没有声明)
+typeof null                   // 返回 object
+```
+
+## constructor 属性
+```js
+"John".constructor                 // 返回函数 String()  { [native code] }
+(3.14).constructor                 // 返回函数 Number()  { [native code] }
+false.constructor                  // 返回函数 Boolean() { [native code] }
+[1,2,3,4].constructor              // 返回函数 Array()   { [native code] }
+{name:'John', age:34}.constructor  // 返回函数 Object()  { [native code] }
+new Date().constructor             // 返回函数 Date()    { [native code] }
+function () {}.constructor         // 返回函数 Function(){ [native code] }
+```
+
